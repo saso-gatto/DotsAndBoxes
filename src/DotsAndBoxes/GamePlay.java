@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class GamePlay {
 
-    private final static int size = 8;
-    private final static int dist = 40;
+    private final static int size = 8;	//Spessore linee
+    private final static int dist = 40;	//Lunghezza di Edge
 
     private int n;
     private Board board;
@@ -27,6 +27,8 @@ public class GamePlay {
     private JLabel redScoreLabel, blueScoreLabel, statusLabel;
 
     private MouseListener mouseListener = new MouseListener() {
+    	
+    	//Il metodo click
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             if(!mouseEnabled) return;
@@ -43,13 +45,15 @@ public class GamePlay {
 
         }
 
+        //Tale metodo ci permette di colorare una determinata linea attraverso le coordinate del mouse
+        //Viene applicato quando si passa sopra ad una linea per far vedere quale mossa sta facendo il giocatore
         @Override
         public void mouseEntered(MouseEvent mouseEvent) {
             if(!mouseEnabled) return;
             Edge location = getSource(mouseEvent.getSource());
             int x=location.getX(), y=location.getY();
             if(location.isHorizontal()) {
-                if(isSetHEdge[x][y]) return;
+                if(isSetHEdge[x][y]) return; //se in pos x,y HEdge è colorata, non la colorare.
                 hEdge[x][y].setBackground((turn == Board.RED) ? Color.RED : Color.BLUE);
             }
             else {
@@ -58,6 +62,7 @@ public class GamePlay {
             }
         }
 
+        //Al rilascio del mouse viene colorata la linea in pos X,Y del mouse.
         @Override
         public void mouseExited(MouseEvent mouseEvent) {
             if(!mouseEnabled) return;
