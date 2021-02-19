@@ -1,6 +1,6 @@
 package DotsAndBoxes;
 public class Edge {
-
+	//Classe che dovrebbe indicare le linee della griglia
     private int x, y;
     private boolean horizontal;
 
@@ -15,7 +15,7 @@ public class Edge {
         this.horizontal = horizontal;
     }
 
-    public boolean isHorizontal() {
+    public boolean isHorizontal() {	//Metodo che dovrebbe verificare se una linea è disposta in orizzontale
         return horizontal;
     }
 

@@ -17,7 +17,6 @@ public class GamePlay {
     private int turn;
     private boolean mouseEnabled;
 
-    GameSolver redSolver, blueSolver, solver;
     String redName, blueName;
     Main parent;
 
@@ -116,13 +115,13 @@ public class GamePlay {
         if(ret.isEmpty()) {
             if(turn == Board.RED) {
                 turn = Board.BLUE;
-                solver = blueSolver;
+                //solver = blueSolver;
                 statusLabel.setText("Player-2's Turn...");
                 statusLabel.setForeground(Color.BLUE);
             }
             else {
                 turn = Board.RED;
-                solver = redSolver;
+                //solver = redSolver;
                 statusLabel.setText("Player-1's Turn...");
                 statusLabel.setForeground(Color.RED);
             }
@@ -133,13 +132,8 @@ public class GamePlay {
     private void manageGame() {
         while(!board.isComplete()) {
             if(goBack) return;
-            if(solver == null) {
-                mouseEnabled = true;
-            }
-            else {
-                mouseEnabled = false;
-                processMove(solver.getNextMove(board, turn));
-            }
+            mouseEnabled = true;
+            
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -199,12 +193,11 @@ public class GamePlay {
         return label;
     }
 
-    public GamePlay(Main parent, JFrame frame, int n, GameSolver redSolver, GameSolver blueSolver, String redName, String blueName) {
+    public GamePlay(Main parent, JFrame frame, int n,  String redName, String blueName) {
         this.parent = parent;
         this.frame = frame;
         this.n = n;
-        this.redSolver = redSolver;
-        this.blueSolver = blueSolver;
+
         this.redName = redName;
         this.blueName = blueName;
         initGame();
@@ -224,7 +217,7 @@ public class GamePlay {
         board = new Board(n);
         int boardWidth = n * size + (n-1) * dist;
         turn = Board.RED;
-        solver = redSolver;
+
 
         JPanel grid = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

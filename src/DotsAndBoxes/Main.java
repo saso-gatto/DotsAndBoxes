@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class Main {
 
     private int n;
-    private GameSolver redSolver, blueSolver;
+ //   private GameSolver redSolver, blueSolver;
     private String redName, blueName;
 
     private JFrame frame;
@@ -81,8 +81,7 @@ public class Main {
 
     public void initGUI() {
 
-        redSolver = null;
-        blueSolver = null;
+
 
         JPanel grid = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -158,7 +157,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        new GamePlay(this, frame, n, redSolver, blueSolver, redName, blueName);
+        new GamePlay(this, frame, n, redName, blueName);
     }
 
     public static void main(String[] args) {
