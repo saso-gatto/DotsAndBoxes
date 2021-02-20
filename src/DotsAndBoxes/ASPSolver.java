@@ -13,20 +13,11 @@ import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
 import it.unical.mat.embasp.specializations.dlv.desktop.DLVDesktopService;
 import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 
-public class MainClass {
+public class ASPSolver {
 
-	public MainClass() {}
 	
-	private static int[][] sudokuMatrix = { 
-			{ 1, 0, 0, 0, 0, 7, 0, 9, 0 }, 
-			{ 0, 3, 0, 0, 2, 0, 0, 0, 8 },
-			{ 0, 0, 9, 6, 0, 0, 5, 0, 0 }, 
-			{ 0, 0, 5, 3, 0, 0, 9, 0, 0 }, 
-			{ 0, 1, 0, 0, 8, 0, 0, 0, 2 },
-			{ 6, 0, 0, 0, 0, 4, 0, 0, 0 }, 
-			{ 3, 0, 0, 0, 0, 0, 0, 1, 0 }, 
-			{ 0, 4, 1, 0, 0, 0, 0, 0, 7 },
-			{ 0, 0, 7, 0, 0, 0, 3, 0, 0 }};
+	private static int[][] hedge;
+	private static int[][] vedge;
 	
 	private static int N=9;
 	
@@ -34,21 +25,24 @@ public class MainClass {
 	
 	private static Handler handler;
 	
-	public static void main(String[] args) {
+	
+	
+	public ASPSolver() {
+/*		Board d = new Board();
 		//Visualizziamo la griglia iniziale del Sudoku
-		displayMatrix();
-		
+//		displayMatrix();
+//		
 		//Creazione dell'oggetto handler che si occuper� di gestire l'invocazione 
 		//del sistema ASP da utilizzare
 		
 		//Se si esegue la demo su Windows 64bit scommentare la seguente istruzione:
-		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
 
 		//Se si esegue la demo su Linux 64bit scommentare la seguente istruzione:
 		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
 		
 		//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
-		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
+		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
 		
 		//In alternativa, aggiungere nella cartella lib l'eseguibile di DLV2 
 		//appropriato in base al proprio sistema e sostituire a "nome_exe_dlv2" 
@@ -58,7 +52,7 @@ public class MainClass {
 		//Specifichiamo i fatti in input, in questo caso tramite oggetti della 
 		//classe Cell che viene prima registrata all'ASPMapper
 		try {
-			ASPMapper.getInstance().registerClass(Cell.class);
+			ASPMapper.getInstance().registerClass(Edge.class);
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
 			e1.printStackTrace();
 		}
@@ -106,31 +100,29 @@ public class MainClass {
 			} 
 			
 		}
-		//Visualizziamo la griglia cosi' ottenuta
-		displayMatrix();
-		
+
 		//In alternativa l'handler puo' invocare DLV2 in modo ASINCRONO.
 		//Scommentare la seguente linea e commentare le linee 89-110
 		//handler.startAsync(new MyCallback(sudokuMatrix));
 	}
 	
-	private static void displayMatrix() {
-		for(int i=0;i<N;i++){
-			for(int j=0;j<N && i%3==0;j++){
-				System.out.print("----");
-				if(j==N-1)System.out.println();
-			}
-			for(int j=0;j<N;j++){
-				System.out.print((j%3==0)?"||":"  ");
-				System.out.print(sudokuMatrix[i][j]+" ");
-				if(j==N-1)System.out.print("||");
-			}
-			System.out.println();
-		}
-		for(int j=0;j<N;j++){
-			System.out.print("----");
-		}
-		System.out.println();
-	}
+//	private static void displayMatrix() {
+//		for(int i=0;i<N;i++){
+//			for(int j=0;j<N && i%3==0;j++){
+//				System.out.print("----");
+//				if(j==N-1)System.out.println();
+//			}
+//			for(int j=0;j<N;j++){
+//				System.out.print((j%3==0)?"||":"  ");
+//				System.out.print(sudokuMatrix[i][j]+" ");
+//				if(j==N-1)System.out.print("||");
+//			}
+//			System.out.println();
+//		}
+//		for(int j=0;j<N;j++){
+//			System.out.print("----");
+//		}
+//		System.out.println();
+//*/	}
 
 }

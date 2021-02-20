@@ -26,7 +26,7 @@ public class Main {
     private JFrame frame;
     private JLabel modeError, sizeError;
 
-    String[] players = {"Seleziona Giocatore", "Human", "Random Player", "Greedy Player", "Minimax Search", "Alpha-Beta Pruning","Monte Carlo Search"};
+    String[] players = {"Seleziona Giocatore", "Human", "ASP Player"};
     private JRadioButton[] sizeButton;
 
     JComboBox<String> redList, blueList;
@@ -65,14 +65,12 @@ public class Main {
 
     private boolean startGame;
 //
-//    private GameSolver getSolver(int level) {
-//        if(level == 1) return new RandomSolver();
-//        else if(level == 2) return new GreedySolver();
-//        else if(level == 3) return new MinimaxSolver();
-//        else if(level == 4) return new AlphaBetaSolver();
-//        else if(level == 5) return new MCSolver();
-//        else return null;
-//    }
+    private ASPSolver getSolver(int level) {
+        if(level == 1) 
+        	return new ASPSolver();
+        else
+        	return null;
+    }
 
     private ActionListener submitListener = new ActionListener() {
         @Override
@@ -90,7 +88,7 @@ public class Main {
 //                if(rIndex > 1) redSolver = getSolver(rIndex - 1);
 //                if(bIndex > 1) blueSolver = getSolver(bIndex - 1);
             }
-            for(int i=0; i<8; i++) {
+            for(int i=0; i<8; i++) { //Serve ad inizializzare una griglia fino a 9x9
                 if(sizeButton[i].isSelected()) {
                     n = i+3;
                     startGame = true;
@@ -102,75 +100,7 @@ public class Main {
     };
 
     public void initGUI() {
-
-
-    	//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
-    			handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
-    			
-    	//Se si esegue la demo su Windows 64bit scommentare la seguente istruzione:
-  		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));    	
-    	
-    		//Specifichiamo i fatti in input, in questo caso tramite oggetti della 
-    		//classe Cell che viene prima registrata all'ASPMapper
-    			try {
-    				ASPMapper.getInstance().registerClass(Cell.class);
-    			} catch (ObjectNotValidException | IllegalAnnotationException e1) {
-    				e1.printStackTrace();
-    			}
-    			InputProgram facts= new ASPInputProgram();
-    			for(int i=0;i<N;i++){
-    				for(int j=0;j<N;j++){
-    					if(sudokuMatrix[i][j]!=0){
-    						try {
-    							facts.addObjectInput(new Cell(i, j, sudokuMatrix[i][j]));
-    						} catch (Exception e) {
-    							e.printStackTrace();
-    						}
-    					}	
-    				}			
-    			}
-    			
-    			//Aggiungiamo all'handler i fatti 
-    			handler.addProgram(facts);
-    			
-    			//Specifichiamo il programma logico tramite file
-    			InputProgram encoding= new ASPInputProgram();
-    			encoding.addFilesPath(encodingResource);
-    			
-    			//Aggiungiamo all'handler il programma logico
-    			handler.addProgram(encoding);
-    			
-    			//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
-    			Output o =  handler.startSync();
-    			
-    			//Analizziamo l'answer set che in quest caso e' unico e che rappresenta la soluzione
-    			//del Sudoku e aggiorniamo la matrice
-    			AnswerSets answersets = (AnswerSets) o;
-    			for(AnswerSet a:answersets.getAnswersets()){
-    				try {
-    					for(Object obj:a.getAtoms()){
-    						//Scartiamo tutto cio' che non e' un oggetto della classe Cell
-    						if(!(obj instanceof Cell)) continue;
-    						//Convertiamo in un oggetto della classe Cell e impostiamo il valore di ogni cella 
-    						//nella matrice rappresentante la griglia del Sudoku
-    						Cell cell= (Cell) obj;					
-    						sudokuMatrix[cell.getRow()][cell.getColumn()] = cell.getValue();
-    					}
-    				} catch (Exception e) {
-    					e.printStackTrace();
-    				} 
-    				
-    			}
-    			//Visualizziamo la griglia cosi' ottenuta
-    			// displayMatrix();
-    			
-    			//In alternativa l'handler puo' invocare DLV2 in modo ASINCRONO.
-    			//Scommentare la seguente linea e commentare le linee 89-110
-    			//handler.startAsync(new MyCallback(sudokuMatrix));
-    		
-    	
-
-        JPanel grid = new JPanel(new GridBagLayout());
+    	JPanel grid = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         constraints.gridx = 0;

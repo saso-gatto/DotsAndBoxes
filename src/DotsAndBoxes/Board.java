@@ -12,7 +12,16 @@ public class Board implements Cloneable {
     private int[][] hEdge;					//Griglia linee orizzontali
     private int[][] vEdge;					//Griglia delle linee verticali 
     private int[][] box;					//Griglia del gioco		
-    private int n, redScore, blueScore;		//n=numero righe e colonna.
+    
+    public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	private int n, redScore, blueScore;		//n=numero righe e colonna.
 
     public Board(int n) {
         hEdge = new int[n-1][n];			//DA VERIFICARE
@@ -25,7 +34,31 @@ public class Board implements Cloneable {
         redScore = blueScore = 0;
     }
 
-    public Board clone() {
+    public int[][] gethEdge() {
+		return hEdge;
+	}
+
+	public void sethEdge(int[][] hEdge) {
+		this.hEdge = hEdge;
+	}
+
+	public int[][] getvEdge() {
+		return vEdge;
+	}
+
+	public void setvEdge(int[][] vEdge) {
+		this.vEdge = vEdge;
+	}
+
+	public int[][] getBox() {
+		return box;
+	}
+
+	public void setBox(int[][] box) {
+		this.box = box;
+	}
+
+	public Board clone() {
         Board cloned = new Board(n);
 
         for(int i=0; i<(n-1); i++)

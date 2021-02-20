@@ -19,7 +19,8 @@ public class GamePlay {
     private Board board;
     private int turn;
     private boolean mouseEnabled;
-
+    private ASPSolver solver;
+    
     String redName, blueName;
     Main parent;
 
@@ -142,8 +143,13 @@ public class GamePlay {
     private void manageGame() {
         while(!board.isComplete()) {
             if(goBack) return;
-            mouseEnabled = true;
-            
+            if(solver == null) {
+                mouseEnabled = true;
+            }
+            else {
+                mouseEnabled = false;
+         //       processMove(solver.getNextMove(board, turn));
+            }
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -225,6 +231,9 @@ public class GamePlay {
     private void initGame() {
 
         board = new Board(n);
+        // if(ASPSOLVER è selezionato
+        // ASPSolver a = new ASPSolver()
+        // a.setBoard(board);
         int boardWidth = n * size + (n-1) * dist;
         turn = Board.RED;
 
