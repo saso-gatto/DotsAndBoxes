@@ -1,5 +1,8 @@
 package DotsAndBoxes;
 import javax.swing.*;
+
+import it.unical.mat.embasp.base.Handler;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +29,8 @@ public class GamePlay {
     private JFrame frame;
     private JLabel redScoreLabel, blueScoreLabel, statusLabel;
 
+   
+    
     private MouseListener mouseListener = new MouseListener() {
     	
     	//Il metodo click
@@ -52,8 +57,8 @@ public class GamePlay {
             if(!mouseEnabled) return;
             Edge location = getSource(mouseEvent.getSource());
             int x=location.getX(), y=location.getY();
-            if(location.isHorizontal()) {
-                if(isSetHEdge[x][y]) return; //se in pos x,y HEdge è colorata, non la colorare.
+            if(location.getHorizontal()) {
+                if(isSetHEdge[x][y]) return; //se in pos x,y HEdge ï¿½ colorata, non la colorare.
                 hEdge[x][y].setBackground((turn == Board.RED) ? Color.RED : Color.BLUE);
             }
             else {
@@ -68,7 +73,7 @@ public class GamePlay {
             if(!mouseEnabled) return;
             Edge location = getSource(mouseEvent.getSource());
             int x=location.getX(), y=location.getY();
-            if(location.isHorizontal()) {
+            if(location.getHorizontal()) {
                 if(isSetHEdge[x][y]) return;
                 hEdge[x][y].setBackground(Color.WHITE);
             }
@@ -82,7 +87,7 @@ public class GamePlay {
     private void processMove(Edge location) {
         int x=location.getX(), y=location.getY();
         ArrayList<Point> ret;
-        if(location.isHorizontal()) {
+        if(location.getHorizontal()) {
             if(isSetHEdge[x][y]) return;
             ret = board.setHEdge(x,y,turn);
             hEdge[x][y].setBackground(Color.BLACK);

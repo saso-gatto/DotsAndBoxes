@@ -20,7 +20,7 @@ public class Board implements Cloneable {
         box = new int[n-1][n-1];	
         fill(hEdge,BLANK);					//Indica che tutte le linee orizz. sono vuote
         fill(vEdge,BLANK);					//Indica che tutte le linee verticali sono vuote
-        fill(box,BLANK);					//tutta la griglia è vuota
+        fill(box,BLANK);					//tutta la griglia ï¿½ vuota
         this.n = n;
         redScore = blueScore = 0;
     }
@@ -143,14 +143,14 @@ public class Board implements Cloneable {
     //Reinizializza la board
     public Board getNewBoard(Edge edge, int color) {
         Board ret = clone();
-        if(edge.isHorizontal())
+        if(edge.getHorizontal())
             ret.setHEdge(edge.getX(), edge.getY(), color);
         else
             ret.setVEdge(edge.getX(), edge.getY(), color);
         return ret;
     }
 
-    //Metodo che può esser usato per sapere quante mosse hanno fatto i giocatori. 
+    //Metodo che puï¿½ esser usato per sapere quante mosse hanno fatto i giocatori. 
     //Conta il numero di linee nere presente nella griglia
     private int getEdgeCount(int i, int j) {
         int count = 0;
