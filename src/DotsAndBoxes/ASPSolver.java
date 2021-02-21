@@ -28,27 +28,24 @@ public class ASPSolver {
 	
 	
 	public ASPSolver() {
-/*		Board d = new Board();
-		//Visualizziamo la griglia iniziale del Sudoku
-//		displayMatrix();
-//		
+		
 		//Creazione dell'oggetto handler che si occuper� di gestire l'invocazione 
 		//del sistema ASP da utilizzare
-		
+				
 		//Se si esegue la demo su Windows 64bit scommentare la seguente istruzione:
 		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
 
-		//Se si esegue la demo su Linux 64bit scommentare la seguente istruzione:
-		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
-		
-		//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
-		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
-		
-		//In alternativa, aggiungere nella cartella lib l'eseguibile di DLV2 
-		//appropriato in base al proprio sistema e sostituire a "nome_exe_dlv2" 
-		//il nome dell'eseguibile di DLV2 nella seguente istruzione e scommentarla
-		//handler = new DesktopHandler(new DLV2DesktopService("lib/nome_exe_dlv2"));
-		
+				//Se si esegue la demo su Linux 64bit scommentare la seguente istruzione:
+				//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
+				
+				//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
+				//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
+				
+				//In alternativa, aggiungere nella cartella lib l'eseguibile di DLV2 
+				//appropriato in base al proprio sistema e sostituire a "nome_exe_dlv2" 
+				//il nome dell'eseguibile di DLV2 nella seguente istruzione e scommentarla
+				//handler = new DesktopHandler(new DLV2DesktopService("lib/nome_exe_dlv2"));
+				
 		//Specifichiamo i fatti in input, in questo caso tramite oggetti della 
 		//classe Cell che viene prima registrata all'ASPMapper
 		try {
@@ -56,73 +53,57 @@ public class ASPSolver {
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
 			e1.printStackTrace();
 		}
+
+
+	}
+	
+	public Edge getNextMove(Board b, int color) {
+		
 		InputProgram facts= new ASPInputProgram();
-		for(int i=0;i<N;i++){
-			for(int j=0;j<N;j++){
-				if(sudokuMatrix[i][j]!=0){
-					try {
-						facts.addObjectInput(new Cell(i, j, sudokuMatrix[i][j]));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}	
-			}			
-		}
+		
+//		facts.addObjectInput(new Edge(i, j, horizontal));
+
 		
 		//Aggiungiamo all'handler i fatti 
 		handler.addProgram(facts);
 		
+
 		//Specifichiamo il programma logico tramite file
 		InputProgram encoding= new ASPInputProgram();
 		encoding.addFilesPath(encodingResource);
-		
+				
 		//Aggiungiamo all'handler il programma logico
 		handler.addProgram(encoding);
-		
+				
 		//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
 		Output o =  handler.startSync();
-		
-		//Analizziamo l'answer set che in quest caso e' unico e che rappresenta la soluzione
-		//del Sudoku e aggiorniamo la matrice
+				
+		//Analizziamo l'answer set
 		AnswerSets answersets = (AnswerSets) o;
 		for(AnswerSet a:answersets.getAnswersets()){
 			try {
 				for(Object obj:a.getAtoms()){
-					//Scartiamo tutto cio' che non e' un oggetto della classe Cell
-					if(!(obj instanceof Cell)) continue;
-					//Convertiamo in un oggetto della classe Cell e impostiamo il valore di ogni cella 
-					//nella matrice rappresentante la griglia del Sudoku
-					Cell cell= (Cell) obj;					
-					sudokuMatrix[cell.getRow()][cell.getColumn()] = cell.getValue();
+					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
+					if(!(obj instanceof Edge)) continue;
+					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
+					Edge edge= (Edge) obj;					
+							
+					if(edge.getHorizontal()) {
+						hedge=b.gethEdge();
+						hedge[edge.getX()][edge.getY()]=b.BLACK;
+						
+					}
+					else {
+						vedge = b.getvEdge();
+						vedge[edge.getX()][edge.getY()]=b.BLACK;
+					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-			
-		}
-
-		//In alternativa l'handler puo' invocare DLV2 in modo ASINCRONO.
-		//Scommentare la seguente linea e commentare le linee 89-110
-		//handler.startAsync(new MyCallback(sudokuMatrix));
+						e.printStackTrace();
+					} 
+		//break;
+		}	
+		return; // ?????	
 	}
 	
-//	private static void displayMatrix() {
-//		for(int i=0;i<N;i++){
-//			for(int j=0;j<N && i%3==0;j++){
-//				System.out.print("----");
-//				if(j==N-1)System.out.println();
-//			}
-//			for(int j=0;j<N;j++){
-//				System.out.print((j%3==0)?"||":"  ");
-//				System.out.print(sudokuMatrix[i][j]+" ");
-//				if(j==N-1)System.out.print("||");
-//			}
-//			System.out.println();
-//		}
-//		for(int j=0;j<N;j++){
-//			System.out.print("----");
-//		}
-//		System.out.println();
-//*/	}
-
 }

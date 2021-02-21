@@ -31,6 +31,10 @@ public class Main {
 
     JComboBox<String> redList, blueList;
     ButtonGroup sizeGroup;
+    
+    private ASPSolver redSolver;
+    private ASPSolver blueSolver;
+    
 
     
     
@@ -64,9 +68,9 @@ public class Main {
     }
 
     private boolean startGame;
-//
+
     private ASPSolver getSolver(int level) {
-        if(level == 1) 
+        if(level == 1)
         	return new ASPSolver();
         else
         	return null;
@@ -85,8 +89,8 @@ public class Main {
                 modeError.setText("");
                 redName = players[rIndex];
                 blueName = players[bIndex];
-//                if(rIndex > 1) redSolver = getSolver(rIndex - 1);
-//                if(bIndex > 1) blueSolver = getSolver(bIndex - 1);
+                if(rIndex > 1) redSolver = getSolver(rIndex - 1);
+                if(bIndex > 1) blueSolver = getSolver(bIndex - 1);
             }
             for(int i=0; i<8; i++) { //Serve ad inizializzare una griglia fino a 9x9
                 if(sizeButton[i].isSelected()) {
