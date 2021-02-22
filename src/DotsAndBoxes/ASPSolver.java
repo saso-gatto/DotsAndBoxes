@@ -60,7 +60,7 @@ public class ASPSolver {
 	public Edge getNextMove(Board b, int color) {
 		
 		InputProgram facts= new ASPInputProgram();
-		
+		Edge ritorna=null;
 //		facts.addObjectInput(new Edge(i, j, horizontal));
 
 		
@@ -87,23 +87,24 @@ public class ASPSolver {
 					if(!(obj instanceof Edge)) continue;
 					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
 					Edge edge= (Edge) obj;					
-							
-					if(edge.getHorizontal()) {
-						hedge=b.gethEdge();
-						hedge[edge.getX()][edge.getY()]=b.BLACK;
-						
-					}
-					else {
-						vedge = b.getvEdge();
-						vedge[edge.getX()][edge.getY()]=b.BLACK;
-					}
+					ritorna= edge;	
+					return ritorna;
+//					if(edge.getHorizontal()) {
+//						hedge=b.gethEdge();
+//						hedge[edge.getX()][edge.getY()]=b.BLACK;
+//						b.sethEdge(hedge);
+//					}
+//					else {
+//						vedge = b.getvEdge();
+//						vedge[edge.getX()][edge.getY()]=b.BLACK;
+//						b.setvEdge(vedge);
+//					}
 				}
 			} catch (Exception e) {
 						e.printStackTrace();
 					} 
-		//break;
-		}	
-		return; // ?????	
+		}
+		return ritorna;
 	}
 	
 }
