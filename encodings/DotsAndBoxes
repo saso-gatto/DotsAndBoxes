@@ -1,9 +1,6 @@
 pos(0..8).
-val(0,1).
+val(0..1).
 
 edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
-% assigned(X,Y,H):-edge(X,Y,H).
 
-%Non � possibile che data una pos X,Y, si abbiano pi� di due edge in quella pos.
-%2 valori perch�: 1 in orizzontale ed 1 in verticale.

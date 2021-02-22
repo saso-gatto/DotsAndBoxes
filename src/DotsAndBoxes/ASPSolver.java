@@ -25,6 +25,8 @@ public class ASPSolver {
 	
 	private static Handler handler;
 	
+	private InputProgram facts;
+	
 	
 	
 	public ASPSolver() {
@@ -54,15 +56,13 @@ public class ASPSolver {
 			e1.printStackTrace();
 		}
 
-
+		facts= new ASPInputProgram();
 	}
 	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
-		InputProgram facts= new ASPInputProgram();
+		
 		Edge ritorna=null;
-//		facts.addObjectInput(new Edge(i, j, horizontal));
-
 		
 		//Aggiungiamo all'handler i fatti 
 		//handler.addProgram(facts);
@@ -80,16 +80,26 @@ public class ASPSolver {
 				
 		//Analizziamo l'answer set
 		AnswerSets answersets = (AnswerSets) o;
+		
+		if (answersets.getAnswersets().size() <= 0)
+			System.out.println("No AS");
+		int cont = 0;
 		for(AnswerSet a:answersets.getAnswersets()){ 
-			System.out.println("AS");
+			
 			try {
 				for(Object obj:a.getAtoms()){
+					cont++;
+					System.out.println("--------- AS -------------");
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
 					if(!(obj instanceof Edge)) continue;
 					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
 					Edge edge= (Edge) obj;					
 					ritorna= edge;	
 					System.out.println("--------- edge "+edge);
+					
+					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
+					handler.addProgram(facts);
+					
 					return ritorna;
 //					if(edge.getHorizontal()) {
 //						hedge=b.gethEdge();
@@ -106,6 +116,8 @@ public class ASPSolver {
 						e.printStackTrace();
 					} 
 		}
+//		ritorna = new Edge(1,1,true);
+		System.out.println("cont "+ cont);
 		return ritorna;
 	}
 	
