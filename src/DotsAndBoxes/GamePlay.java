@@ -19,7 +19,8 @@ public class GamePlay {
     private Board board;
     private int turn;
     private boolean mouseEnabled;
-    private ASPSolver solver;
+    private ASPSolver solver, blueSolver,redSolver;
+    
     
     String redName, blueName;
     Main parent;
@@ -126,13 +127,13 @@ public class GamePlay {
         if(ret.isEmpty()) {
             if(turn == Board.RED) {
                 turn = Board.BLUE;
-                //solver = blueSolver;
+                solver = blueSolver;
                 statusLabel.setText("Player-2's Turn...");
                 statusLabel.setForeground(Color.BLUE);
             }
             else {
                 turn = Board.RED;
-                //solver = redSolver;
+                solver = redSolver;
                 statusLabel.setText("Player-1's Turn...");
                 statusLabel.setForeground(Color.RED);
             }
@@ -148,7 +149,7 @@ public class GamePlay {
             }
             else {
                 mouseEnabled = false;
-         //       processMove(solver.getNextMove(board, turn));
+                processMove(solver.getNextMove(board, turn));
             }
             try {
                 Thread.sleep(100);
@@ -209,13 +210,16 @@ public class GamePlay {
         return label;
     }
 
-    public GamePlay(Main parent, JFrame frame, int n,  String redName, String blueName) {
+    public GamePlay(Main parent, ASPSolver blueSolver, ASPSolver redSolver, JFrame frame, int n,  String redName, String blueName) {
         this.parent = parent;
         this.frame = frame;
         this.n = n;
 
         this.redName = redName;
         this.blueName = blueName;
+        
+        this.blueSolver= blueSolver;
+        this.redSolver=redSolver;
         initGame();
     }
 
@@ -231,7 +235,7 @@ public class GamePlay {
     private void initGame() {
 
         board = new Board(n);
-        // if(ASPSOLVER è selezionato
+        // if(ASPSOLVER ï¿½ selezionato
         // ASPSolver a = new ASPSolver()
         // a.setBoard(board);
         int boardWidth = n * size + (n-1) * dist;

@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 public class Main {
 
     private int n;
- //   private GameSolver redSolver, blueSolver;
     private String redName, blueName;
 
     private JFrame frame;
@@ -178,7 +177,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        new GamePlay(this, frame, n, redName, blueName);
+        new GamePlay(this, blueSolver,redSolver ,frame, n, redName, blueName);
     }
 
     public static void main(String[] args) {

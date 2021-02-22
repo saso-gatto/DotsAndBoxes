@@ -1,10 +1,9 @@
-sizeBlock(3).
 pos(0..8).
 val(0,1).
 
-edge(X,Y,H)|edge(X,Y,H):- pos(X), pos(Y), val(H).
+edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
 % assigned(X,Y,H):-edge(X,Y,H).
 
-%Non è possibile che data una pos X,Y, si abbiano più di due edge in quella pos.
-%2 valori perché: 1 in orizzontale ed 1 in verticale.
+%Non ï¿½ possibile che data una pos X,Y, si abbiano piï¿½ di due edge in quella pos.
+%2 valori perchï¿½: 1 in orizzontale ed 1 in verticale.
