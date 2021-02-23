@@ -10,7 +10,6 @@ import it.unical.mat.embasp.languages.asp.ASPMapper;
 import it.unical.mat.embasp.languages.asp.AnswerSet;
 import it.unical.mat.embasp.languages.asp.AnswerSets;
 import it.unical.mat.embasp.platforms.desktop.DesktopHandler;
-import it.unical.mat.embasp.specializations.dlv.desktop.DLVDesktopService;
 import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 
 public class ASPSolver {
@@ -28,7 +27,6 @@ public class ASPSolver {
 	private InputProgram facts;
 	
 	
-	
 	public ASPSolver() {
 
 		if(System.getProperty("os.name").equals("Mac OS X")) {
@@ -43,13 +41,9 @@ public class ASPSolver {
 			System.out.println("Errore, sistema operativo non riconosciuto con IDLV");
 		}
 				
-				//In alternativa, aggiungere nella cartella lib l'eseguibile di DLV2 
-				//appropriato in base al proprio sistema e sostituire a "nome_exe_dlv2" 
-				//il nome dell'eseguibile di DLV2 nella seguente istruzione e scommentarla
-				//handler = new DesktopHandler(new DLV2DesktopService("lib/nome_exe_dlv2"));
 				
 		//Specifichiamo i fatti in input, in questo caso tramite oggetti della 
-		//classe Cell che viene prima registrata all'ASPMapper
+		//classe Edge che viene prima registrata all'ASPMapper
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
@@ -57,14 +51,14 @@ public class ASPSolver {
 		}
 
 		facts= new ASPInputProgram();
-		
+	/*		
 		try {
-			facts.addObjectInput(new Edge(1, 1,1));
+			facts.addObjectInput(new Edge(1,1,1));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	*/		
 		//Aggiungiamo all'handler i fatti 
 		handler.addProgram(facts);
 		
