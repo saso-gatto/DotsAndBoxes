@@ -27,7 +27,7 @@ public class TestProgram {
                 if (turn == Board.RED) move = redSolver.getNextMove(board, Board.RED);
                 else move = blueSolver.getNextMove(board, Board.BLUE);
                 ArrayList<Point> ret;
-                if (move.getHorizontal())
+                if (move.getHorizontal()==1)
                     ret = board.setHEdge(move.getX(), move.getY(), turn);
                 else
                     ret = board.setVEdge(move.getX(), move.getY(), turn);

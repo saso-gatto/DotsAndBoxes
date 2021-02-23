@@ -11,14 +11,14 @@ public class Edge {
 	@Param(1)
 	private int y;
 	@Param(2)
-	private boolean horizontal;
+	private int horizontal; // 0 -> verticale    1 -> orizzontale 
 
     Edge() {
         x = y = -1;
-        horizontal = false;
+        horizontal = 0;
     }
 
-    Edge(int x, int y, boolean horizontal) {
+    Edge(int x, int y, int horizontal) {
         this.x = x;
         this.y = y;
         this.horizontal = horizontal;
@@ -41,18 +41,18 @@ public class Edge {
 		this.y = y;
 	}
 	
-	public boolean getHorizontal() {	//Metodo che dovrebbe verificare se una linea � disposta in orizzontale
+	public int getHorizontal() {	//Metodo che dovrebbe verificare se una linea � disposta in orizzontale
         return horizontal;
     }
 	
-	public void setHorizontal(boolean horizontal) {
+	public void setHorizontal(int horizontal) {
 		this.horizontal = horizontal;
 	}
 
 	
 	@Override
     public String toString() {
-        return ((horizontal ? "H " : "V ") + x + " " + y);
+        return ((horizontal==1 ? "H " : "V ") + x + " " + y);
     }
 
 }

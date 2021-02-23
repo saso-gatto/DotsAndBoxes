@@ -112,11 +112,11 @@ public class Board implements Cloneable {
         for(int i=0; i<(n-1);i++)
             for(int j=0; j<n; j++)
                 if(hEdge[i][j] == BLANK)
-                    ret.add(new Edge(i,j,true));
+                    ret.add(new Edge(i,j,1));
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
                 if(vEdge[i][j] == BLANK)
-                    ret.add(new Edge(i,j,false));
+                    ret.add(new Edge(i,j,0));
         return ret;
     }
 
@@ -176,7 +176,7 @@ public class Board implements Cloneable {
     //Reinizializza la board
     public Board getNewBoard(Edge edge, int color) {
         Board ret = clone();
-        if(edge.getHorizontal())
+        if(edge.getHorizontal()==1)
             ret.setHEdge(edge.getX(), edge.getY(), color);
         else
             ret.setVEdge(edge.getX(), edge.getY(), color);

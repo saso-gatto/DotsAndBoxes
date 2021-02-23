@@ -1,6 +1,8 @@
-pos(0..8).
-val(0..1).
+%pos(0..8).
+%val(0..1).
 
-edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
+%edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
+edge(1,1,1).
+%edge(0,0,0).
 

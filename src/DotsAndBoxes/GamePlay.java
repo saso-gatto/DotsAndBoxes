@@ -59,7 +59,7 @@ public class GamePlay {
             if(!mouseEnabled) return;
             Edge location = getSource(mouseEvent.getSource());
             int x=location.getX(), y=location.getY();
-            if(location.getHorizontal()) {
+            if(location.getHorizontal()==1) {
                 if(isSetHEdge[x][y]) return; //se in pos x,y HEdge � colorata, non la colorare.
                 hEdge[x][y].setBackground((turn == Board.RED) ? Color.RED : Color.BLUE);
             }
@@ -75,7 +75,7 @@ public class GamePlay {
             if(!mouseEnabled) return;
             Edge location = getSource(mouseEvent.getSource());
             int x=location.getX(), y=location.getY();
-            if(location.getHorizontal()) {
+            if(location.getHorizontal()==1) {
                 if(isSetHEdge[x][y]) return;
                 hEdge[x][y].setBackground(Color.WHITE);
             }
@@ -89,7 +89,7 @@ public class GamePlay {
     private void processMove(Edge location) {
         int x=location.getX(), y=location.getY();
         ArrayList<Point> ret;
-        if(location.getHorizontal()) {
+        if(location.getHorizontal()==1) {
             if(isSetHEdge[x][y]) return;
             ret = board.setHEdge(x,y,turn);
             hEdge[x][y].setBackground(Color.BLACK);
@@ -163,11 +163,11 @@ public class GamePlay {
         for(int i=0; i<(n-1); i++)
             for(int j=0; j<n; j++)
                 if(hEdge[i][j] == object)
-                    return new Edge(i,j,true);
+                    return new Edge(i,j,1);
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
                 if(vEdge[i][j] == object)
-                    return new Edge(i,j,false);
+                    return new Edge(i,j,0);
         return new Edge();
     }
 

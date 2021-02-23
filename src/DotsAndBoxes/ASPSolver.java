@@ -40,6 +40,7 @@ public class ASPSolver {
 				//Se si esegue la demo su Linux 64bit scommentare la seguente istruzione:
 				//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
 				
+		
 		//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
 		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
 				
@@ -57,6 +58,24 @@ public class ASPSolver {
 		}
 
 		facts= new ASPInputProgram();
+		
+		try {
+			facts.addObjectInput(new Edge(1, 1,1));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Aggiungiamo all'handler i fatti 
+		handler.addProgram(facts);
+		
+		//Specifichiamo il programma logico tramite file
+		InputProgram encoding= new ASPInputProgram();
+		encoding.addFilesPath(encodingResource);
+				
+		//Aggiungiamo all'handler il programma logico
+		handler.addProgram(encoding);
+		
 	}
 	
 	public Edge getNextMove(Board b, int color) {
@@ -64,16 +83,7 @@ public class ASPSolver {
 		
 		Edge ritorna=null;
 		
-		//Aggiungiamo all'handler i fatti 
-		//handler.addProgram(facts);
 		
-
-		//Specifichiamo il programma logico tramite file
-		InputProgram encoding= new ASPInputProgram();
-		encoding.addFilesPath(encodingResource);
-				
-		//Aggiungiamo all'handler il programma logico
-		handler.addProgram(encoding);
 				
 		//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
 		Output o =  handler.startSync();

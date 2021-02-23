@@ -34,13 +34,10 @@ public class Main {
     private ASPSolver redSolver;
     private ASPSolver blueSolver;
     
-
     
-    
-    
-	private static String encodingResource="encodings/DotsAndBoxes";
+//	private static String encodingResource="encodings/DotsAndBoxes";
 	
-	private static Handler handler;
+//	private static Handler handler;
     
 	
 	
