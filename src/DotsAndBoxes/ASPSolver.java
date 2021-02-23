@@ -77,12 +77,34 @@ public class ASPSolver {
 		
 	}
 	
+//Metodo che possiamo utilizzare per aggiungere eventuali celle delle matrici?
+	public void trovaFatti(Board b)  {
+		this.N=b.getN();
+		int [][]hEdge=b.gethEdge();
+		int [][]vEdge=b.getvEdge();
+		for(int i=0; i<(N-1);i++)
+            for(int j=0; j<N; j++)
+					try {
+						facts.addObjectInput(new Edge(i, j, 1));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        for(int i=0; i<N; i++)
+            for(int j=0; j<(N-1); j++)
+					try {
+						facts.addObjectInput(new Edge(i, j, 0));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	}
+	
+	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
 		
 		Edge ritorna=null;
-		
-		
 				
 		//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
 		Output o =  handler.startSync();
