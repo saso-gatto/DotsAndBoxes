@@ -30,19 +30,18 @@ public class ASPSolver {
 	
 	
 	public ASPSolver() {
-		
-		//Creazione dell'oggetto handler che si occuper� di gestire l'invocazione 
-		//del sistema ASP da utilizzare
-				
-		//Se si esegue la demo su Windows 64bit scommentare la seguente istruzione:
-		//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
 
-				//Se si esegue la demo su Linux 64bit scommentare la seguente istruzione:
-				//handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
-				
-		
-		//Se si esegue la demo su MacOS 64bit scommentare la seguente istruzione:
-		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
+		if(System.getProperty("os.name").equals("Mac OS X")) {
+			handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
+			System.out.println("Sistema operativo Mac OS X");
+		}
+		else if(System.getProperty("os.name").equals("Windows 10")) {
+			handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+			System.out.println("Sistema operativo Windows 10");
+		}
+		else {
+			System.out.println("Errore, sistema operativo non riconosciuto con IDLV");
+		}
 				
 				//In alternativa, aggiungere nella cartella lib l'eseguibile di DLV2 
 				//appropriato in base al proprio sistema e sostituire a "nome_exe_dlv2" 
