@@ -1,8 +1,10 @@
-%pos(0..8).
-%val(0..1).
+val(0..1).
 
-%edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
+pos(K):-size(K).
+pos(X):-pos(Y), X=Y-1, X>=0.
 
-edge(1,1,1).
-%edge(0,0,0).
+edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
+:- #count{X,Y:edge(X,Y,H)}>2, edge(X,Y,H).
+
+:- edge(X,Y,H), size(K), X=K,Y=K.

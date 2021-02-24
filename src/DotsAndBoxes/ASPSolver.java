@@ -1,5 +1,7 @@
 package DotsAndBoxes;
 
+import java.util.ArrayList;
+
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
 import it.unical.mat.embasp.base.Output;
@@ -94,9 +96,29 @@ public class ASPSolver {
 					}
 	}
 	
+	public boolean check(Board b,Edge e) {
+		ArrayList <Edge> mosse = b.getAvailableMoves();
+		for (int i = 0; i<mosse.size(); i++) {
+			int x=mosse.get(i).getX();
+			int y=mosse.get(i).getY();
+			int h=mosse.get(i).getHorizontal();
+			if (x==e.getX() && y==e.getY() && h==e.getHorizontal()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
+		
+		try {
+			facts.addObjectInput(new Size(b.getSize()-1));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		Edge ritorna=null;
 				
@@ -115,13 +137,17 @@ public class ASPSolver {
 				for(Object obj:a.getAtoms()){
 					cont++;
 					System.out.println("--------- AS -------------");
+					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
 					if(!(obj instanceof Edge)) continue;
 					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
 					Edge edge= (Edge) obj;					
-					ritorna= edge;	
-					System.out.println("--------- edge "+edge);
+					ritorna= edge;
 					
+					if(!check(b, edge)) continue;
+					
+					System.out.println("--------- edge "+edge);
+									
 					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
 					handler.addProgram(facts);
 					

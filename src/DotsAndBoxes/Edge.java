@@ -13,12 +13,12 @@ public class Edge {
 	@Param(2)
 	private int horizontal; // 0 -> verticale    1 -> orizzontale 
 
-    Edge() {
+    public Edge() {
         x = y = -1;
         horizontal = 0;
     }
 
-    Edge(int x, int y, int horizontal) {
+    public Edge(int x, int y, int horizontal) {
         this.x = x;
         this.y = y;
         this.horizontal = horizontal;
