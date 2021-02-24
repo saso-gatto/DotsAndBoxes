@@ -121,7 +121,9 @@ public class ASPSolver {
 		}
 		
 		Edge ritorna=null;
-				
+	
+		ASPInputProgram var = new ASPInputProgram();
+
 		//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
 		Output o =  handler.startSync();
 				
@@ -148,20 +150,10 @@ public class ASPSolver {
 					
 					System.out.println("--------- edge "+edge);
 									
-					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
-					handler.addProgram(facts);
-					
+					var.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
+					handler.addProgram(var);
+					var.clearAll();
 					return ritorna;
-//					if(edge.getHorizontal()) {
-//						hedge=b.gethEdge();
-//						hedge[edge.getX()][edge.getY()]=b.BLACK;
-//						b.sethEdge(hedge);
-//					}
-//					else {
-//						vedge = b.getvEdge();
-//						vedge[edge.getX()][edge.getY()]=b.BLACK;
-//						b.setvEdge(vedge);
-//					}
 				}
 			} catch (Exception e) {
 						e.printStackTrace();
