@@ -112,8 +112,8 @@ public class Main {
 
         JPanel modePanel = new JPanel(new GridLayout(2, 2));
         modePanel.setPreferredSize(new Dimension(400, 50));
-        modePanel.add(new JLabel("<html><font color='red'> Giocatore 1:", SwingConstants.CENTER));
-        modePanel.add(new JLabel("<html><font color='blue'> Giocatore 2:", SwingConstants.CENTER));
+        modePanel.add(new JLabel("<html><font color='orange'> Giocatore 1:", SwingConstants.CENTER));
+        modePanel.add(new JLabel("<html><font color='#02a3d0'> Giocatore 2:", SwingConstants.CENTER));
         modePanel.add(redList);
         modePanel.add(blueList);
         redList.setSelectedIndex(0);
