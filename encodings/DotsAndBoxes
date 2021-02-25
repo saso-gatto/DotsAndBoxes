@@ -3,20 +3,13 @@ val(0..1).
 pos(K):-size(K).
 pos(X):-pos(Y), X=Y-1, X>=0.
 
-
 % Guess
 edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
-
 
 %Evitano di uscire dai bordi
 :- edge(K,_,0),size(K), pos(K).
 :- edge(_,K,1),size(K),pos(K).
-%:- edge(X,Y,H), size(K), X=K,Y=K.
-
-%check(X,Y,1):-edge(X1,Y,1), edge(X1,Y,0), edge(X1,Y1,0),X>0, X1=X-1, Y1=Y+1, noedge(X,Y,1).
-%:~check(X,Y,1). [1@1, X,Y]
 
 
-
-%check(X,Y,0):-edge(X1,Y,0), edge(X1,Y,1), edge(X1,Y1,1), Y>0, X1=X-1,Y1=Y+1, noedge(X,Y,0).
-%:~ check(X,Y,0).  [1@1, X,Y]
+%check(X,Y,H):-edge(X,Y,0), edge(X1,Y,H), edge(X,Y1,0), X1=X+1, Y1=Y+1.
+%:~ noedge(X,Y,1), check(X,Y,1). [1@1, X,Y]
