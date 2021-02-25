@@ -25,21 +25,14 @@ public class Main {
     private JFrame frame;
     private JLabel modeError, sizeError;
 
-    String[] players = {"Seleziona Giocatore", "Human", "ASP Player"};
+    String[] players = {"Seleziona Giocatore", "Umano", "Giocatore ASP"};
     private JRadioButton[] sizeButton;
 
     JComboBox<String> redList, blueList;
     ButtonGroup sizeGroup;
     
     private ASPSolver redSolver;
-    private ASPSolver blueSolver;
-    
-    
-//	private static String encodingResource="encodings/DotsAndBoxes";
-	
-//	private static Handler handler;
-    
-	
+    private ASPSolver blueSolver;	
 	
     public Main() {
 

@@ -114,7 +114,7 @@ public class ASPSolver {
 		System.out.println("sono in getNextMove");
 		
 		try {
-			facts.addObjectInput(new Size(b.getSize()-1));
+			facts.addObjectInput(new Size(b.getSize()));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -144,10 +144,10 @@ public class ASPSolver {
 					if(!(obj instanceof Edge)) continue;
 					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
 					Edge edge= (Edge) obj;					
-					ritorna= edge;
 					
 					if(!check(b, edge)) continue;
 					
+					ritorna= edge;
 					System.out.println("--------- edge "+edge);
 									
 					var.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
