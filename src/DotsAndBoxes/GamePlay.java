@@ -114,11 +114,11 @@ public class GamePlay {
         if(board.isComplete()) {
             int winner = board.getWinner();
             if(winner == Board.RED) {
-                statusLabel.setText("Il Giocatore-1 ha vinto!");
+                statusLabel.setText("Il Giocatore 1 ha vinto!");
                 statusLabel.setForeground(arancione);
             }
             else if(winner == Board.BLUE) {
-                statusLabel.setText("Il Giocatore-2 ha vinto!");
+                statusLabel.setText("Il Giocatore 2 ha vinto!");
                 statusLabel.setForeground(azzurro);
             }
             else {
@@ -131,13 +131,13 @@ public class GamePlay {
             if(turn == Board.RED) {
                 turn = Board.BLUE;
                 solver = blueSolver;
-                statusLabel.setText("Turno del Giocatore-1 ...");
+                statusLabel.setText("Turno del Giocatore 2");
                 statusLabel.setForeground(azzurro);
             }
             else {
                 turn = Board.RED;
                 solver = redSolver;
-                statusLabel.setText("Turno del Giocatore-2 ...");
+                statusLabel.setText("Turno del Giocatore 1");
                 statusLabel.setForeground(arancione);
             }
         }
@@ -251,8 +251,8 @@ public class GamePlay {
         JPanel playerPanel = new JPanel(new GridLayout(2, 2));
         if(n>3) playerPanel.setPreferredSize(new Dimension(2 * boardWidth, dist));
         else playerPanel.setPreferredSize(new Dimension(2 * boardWidth, 2 * dist));
-        playerPanel.add(new JLabel("<html><font color='orange'>Giocatore-1:", SwingConstants.CENTER));
-        playerPanel.add(new JLabel("<html><font color='#02a3d0'>Giocatore-2:", SwingConstants.CENTER));
+        playerPanel.add(new JLabel("<html><font color='orange'>Giocatore 1:", SwingConstants.CENTER));
+        playerPanel.add(new JLabel("<html><font color='#02a3d0'>Giocatore 2:", SwingConstants.CENTER));
         playerPanel.add(new JLabel("<html><font color='orange'>" + redName, SwingConstants.CENTER));
         playerPanel.add(new JLabel("<html><font color='#02a3d0'>" + blueName, SwingConstants.CENTER));
         ++constraints.gridy;
@@ -312,7 +312,7 @@ public class GamePlay {
         ++constraints.gridy;
         grid.add(getEmptyLabel(new Dimension(2 * boardWidth, 10)), constraints);
 
-        statusLabel = new JLabel("Turno del Giocatore-1 ...", SwingConstants.CENTER);
+        statusLabel = new JLabel("Turno del Giocatore 1", SwingConstants.CENTER);
         statusLabel.setForeground(arancione);
         statusLabel.setPreferredSize(new Dimension(2 * boardWidth, dist));
         ++constraints.gridy;

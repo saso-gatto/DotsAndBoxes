@@ -16,13 +16,11 @@ import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 
 public class ASPSolver {
 
-	
 	private static int[][] hedge;
 	private static int[][] vedge;
 	
 	
 	private static String encodingResource="encodings/DotsAndBoxes";
-	
 	private static Handler handler;
 	
 	private InputProgram facts;
@@ -43,7 +41,6 @@ public class ASPSolver {
 		}
 				
 				
-		//Specifichiamo i fatti in input, in questo caso tramite oggetti della 
 		//classe Edge che viene prima registrata all'ASPMapper
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
@@ -52,22 +49,12 @@ public class ASPSolver {
 		}
 
 		facts= new ASPInputProgram();
-	/*		
-		try {
-			facts.addObjectInput(new Edge(1,1,1));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	*/		
-		//Aggiungiamo all'handler i fatti 
+
 		handler.addProgram(facts);
-		
-		//Specifichiamo il programma logico tramite file
+
 		InputProgram encoding= new ASPInputProgram();
 		encoding.addFilesPath(encodingResource);
-				
-		//Aggiungiamo all'handler il programma logico
+
 		handler.addProgram(encoding);
 		
 	}
@@ -115,7 +102,6 @@ public class ASPSolver {
 		try {
 			facts.addObjectInput(new Size(b.getSize()));
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -123,10 +109,8 @@ public class ASPSolver {
 	
 		ASPInputProgram var = new ASPInputProgram();
 
-		//L'handler invoca DLV2 in modo SINCRONO dando come input il programma logico e i fatti
 		Output o =  handler.startSync();
 		
-		//Analizziamo l'answer set
 		AnswerSets answersets = (AnswerSets) o;
 		
 		if (answersets.getAnswersets().size() <= 0)
@@ -141,7 +125,7 @@ public class ASPSolver {
 					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
 					if(!(obj instanceof Edge)) continue;
-					//Convertiamo in un oggetto della classe Edge e impostiamo il valore di ogni cella 
+					
 					Edge edge= (Edge) obj;					
 					
 					if(!check(b, edge)) continue;
@@ -158,7 +142,6 @@ public class ASPSolver {
 						e.printStackTrace();
 					} 
 		}
-//		ritorna = new Edge(1,1,true);
 		System.out.println("cont "+ cont);
 		return ritorna;
 	}

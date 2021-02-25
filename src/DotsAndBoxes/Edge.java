@@ -4,7 +4,6 @@ import it.unical.mat.embasp.languages.Param;
 
 @Id("edge")
 public class Edge {
-	//Classe che dovrebbe indicare le linee della griglia
 	
 	@Param(0)
 	private int x; 

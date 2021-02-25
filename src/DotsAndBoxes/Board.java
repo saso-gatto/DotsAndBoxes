@@ -24,12 +24,12 @@ public class Board implements Cloneable {
 	private int n, redScore, blueScore;		//n=numero righe e colonna.
 
     public Board(int n) {
-        hEdge = new int[n-1][n];			//DA VERIFICARE
+        hEdge = new int[n-1][n];			
         vEdge = new int[n][n-1];
         box = new int[n-1][n-1];	
         fill(hEdge,BLANK);					//Indica che tutte le linee orizz. sono vuote
         fill(vEdge,BLANK);					//Indica che tutte le linee verticali sono vuote
-        fill(box,BLANK);					//tutta la griglia � vuota
+        fill(box,BLANK);					//griglia vuota
         this.n = n;
         redScore = blueScore = 0;
     }

@@ -16,6 +16,7 @@ import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class Main {
 
@@ -92,14 +93,22 @@ public class Main {
         }
     };
 
+    private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+        Image img = icon.getImage();  
+        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);  
+        return new ImageIcon(resizedImage);
+    }
+    
     public void initGUI() {
     	JPanel grid = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        JLabel titleLabel = new JLabel(new ImageIcon(getClass().getResource("title.png")));
-        grid.add(titleLabel, constraints);
+        ImageIcon icon = new  ImageIcon(getClass().getResource("logo.png"));
+        ImageIcon img = (ImageIcon) resizeIcon(icon, 460, 250);
+        JLabel logoLabel = new JLabel(img);
+        grid.add(logoLabel, constraints);
 
         ++constraints.gridy;
         grid.add(getEmptyLabel(new Dimension(500,25)), constraints);
