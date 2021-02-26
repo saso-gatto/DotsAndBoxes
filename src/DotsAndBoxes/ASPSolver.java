@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import it.unical.mat.embasp.base.Handler;
 import it.unical.mat.embasp.base.InputProgram;
+import it.unical.mat.embasp.base.OptionDescriptor;
 import it.unical.mat.embasp.base.Output;
 import it.unical.mat.embasp.languages.IllegalAnnotationException;
 import it.unical.mat.embasp.languages.ObjectNotValidException;
@@ -34,6 +35,7 @@ public class ASPSolver {
 		}
 		else if(System.getProperty("os.name").equals("Windows 10")) {
 			handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+			//handler.addOption(new OptionDescriptor("-n 0"));
 			System.out.println("Sistema operativo Windows 10");
 		}
 		else {
@@ -116,8 +118,9 @@ public class ASPSolver {
 		if (answersets.getAnswersets().size() <= 0)
 			System.out.println("No AS");
 		int cont = 0;
+		//getOptimalAnswwerSet
 		for(AnswerSet a:answersets.getAnswersets()){ 
-			
+		//for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				for(Object obj:a.getAtoms()){
 					cont++;
