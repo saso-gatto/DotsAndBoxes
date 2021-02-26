@@ -31,6 +31,7 @@ public class ASPSolver {
 
 		if(System.getProperty("os.name").equals("Mac OS X")) {
 			handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.mac_7"));
+			//handler.addOption(new OptionDescriptor("-n 0"));
 			System.out.println("Sistema operativo Mac OS X");
 		}
 		else if(System.getProperty("os.name").equals("Windows 10")) {
@@ -124,7 +125,7 @@ public class ASPSolver {
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				for(Object obj:a.getAtoms()){
-					cont++;
+					
 					System.out.println("--------- AS -------------");
 					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
@@ -133,7 +134,7 @@ public class ASPSolver {
 					Edge edge= (Edge) obj;					
 					
 					if(!check(b, edge)) continue;
-					
+					cont++;
 					ritorna= edge;
 					System.out.println("--------- edge "+edge);
 					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
