@@ -46,6 +46,7 @@ public class ASPSolver {
 		//classe Edge che viene prima registrata all'ASPMapper
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
+			ASPMapper.getInstance().registerClass(Size.class);
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
 			e1.printStackTrace();
 		}
@@ -118,9 +119,9 @@ public class ASPSolver {
 		if (answersets.getAnswersets().size() <= 0)
 			System.out.println("No AS");
 		int cont = 0;
-		//getOptimalAnswwerSet
-		for(AnswerSet a:answersets.getAnswersets()){ 
-		//for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
+
+		//for(AnswerSet a:answersets.getAnswersets()){ 
+		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				for(Object obj:a.getAtoms()){
 					cont++;
@@ -135,7 +136,8 @@ public class ASPSolver {
 					
 					ritorna= edge;
 					System.out.println("--------- edge "+edge);
-									
+					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
+					
 					var.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
 					handler.addProgram(var);
 					var.clearAll();
