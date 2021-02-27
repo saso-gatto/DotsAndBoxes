@@ -194,6 +194,19 @@ public class Board implements Cloneable {
         return count;
     }
     
+    public int getTotalEdge() {
+    	int cont=0;
+    	for(int i=0; i<(n-1);i++)
+            for(int j=0; j<n; j++)
+                if(hEdge[i][j] == BLACK)
+                    cont++;
+        for(int i=0; i<n; i++)
+            for(int j=0; j<(n-1); j++)
+                if(vEdge[i][j] == BLACK)
+                	cont++;
+        return cont;
+    }
+    
     //Metodo che ci permette di controllare il numero di punti 
     public int getBoxCount(int nSides) {
         int count = 0;

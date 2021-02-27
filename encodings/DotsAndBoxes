@@ -5,8 +5,8 @@ pos(X):-pos(Y), X=Y-1, X>=0.
 
 %. 1-> orizonale       0 -> vericale
 
-%size(2).
-%edge(0,0,0).
+size(2).
+edge(0,0,0).
 %edge(1,0,1).
 %edge(0,1,0).
 %edge(0,0,1).
@@ -14,27 +14,35 @@ pos(X):-pos(Y), X=Y-1, X>=0.
 % Guess
 edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
-%:- #count{X,Y,V :edge(X,Y,V)}=N, #count{X,Y,V :noedge(X,Y,V)}=M, N<>M-6.
+%:- #count{X,Y,V :edge(X,Y,V)}=N, #count{X,Y,V :noedge(X,Y,V)}=M, K=N+M, K!=18.
  
-totEdge(K):-#count{X,Y,H:edge(X,Y,H), pos(X), pos(Y)}=K.
-:~ totEdge(0).[1@4]
- 
-%:~ #count{X,Y,H:edge(X,Y,H),pos(X), pos(Y)}=K. [K@5, X,Y]
-%:~ #count{X,Y,H:edge(X,Y,H), pos(X), pos(Y)}=0. [1@4,X,Y]
+%:~ pos(X),pos(Y), #count{X,Y,H:edge(X,Y,H)}=K. [K@3,X,Y]
+
+%:~ pos(X),pos(Y), #count{X,Y,H:edge(X,Y,H)}=0. [1@1,X,Y]
 
 %Evitano di uscire dai bordi
 :- edge(K,_,0),size(K), pos(K).
 :- edge(_,K,1),size(K),pos(K).
 
 
+
+%mossaPrec(0).
+%mossaPrec(K):- totEdge(M), K=M-1.
+%totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
+%:~ totEdge(K), mossaPrec(M), K!=M+1.[1@4]
+
+
+
 checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1.
-:~ noedge(X,Y,1), checkUp(X,Y,1). [1@3, X,Y]
+:~ noedge(X,Y,1), checkUp(X,Y,1). [1@2, X,Y]
 
 checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1.
-:~ noedge(X,Y,1), checkDown(X,Y,1). [1@3, X,Y]
+:~ noedge(X,Y,1), checkDown(X,Y,1). [1@2, X,Y]
 
 checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1.
-:~ noedge(X,Y,0), checkLeft(X,Y,0). [1@3, X,Y]
+:~ noedge(X,Y,0), checkLeft(X,Y,0). [1@2, X,Y]
 
 checkRight(X,Y,0):-edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1.
-:~ noedge(X,Y,0), checkRight(X,Y,0). [1@3, X,Y]
+:~ noedge(X,Y,0), checkRight(X,Y,0). [1@2, X,Y]
+
+
