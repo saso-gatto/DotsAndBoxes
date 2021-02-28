@@ -121,8 +121,8 @@ public class ASPSolver {
 			System.out.println("No AS");
 		int cont = 0;
 
-		//for(AnswerSet a:answersets.getAnswersets()){ 
-		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
+		for(AnswerSet a:answersets.getAnswersets()){ 
+		//for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				for(Object obj:a.getAtoms()){
 					
