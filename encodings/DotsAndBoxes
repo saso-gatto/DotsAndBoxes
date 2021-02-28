@@ -18,30 +18,27 @@ edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
  
 %:~ pos(X),pos(Y), #count{X,Y,H:edge(X,Y,H)}=K. [K@3,X,Y]
 
-%:~ pos(X),pos(Y), #count{X,Y,H:edge(X,Y,H)}=0. [1@1,X,Y]
+:~ pos(X),pos(Y), #count{X,Y,H:edge(X,Y,H)}=0. [1@1,X,Y]
 
 %Evitano di uscire dai bordi
 :- edge(K,_,0),size(K), pos(K).
 :- edge(_,K,1),size(K),pos(K).
 
 
+totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
+:- totEdge(K), #max{M:mossaPrec(M)}=N, K<>N+1.
 
-%mossaPrec(4).
-%mossaPrec(M):- #count{X,Y,H:edge(X,Y,H)}=K, M=K.
-%:- mossaPrec(M),totEdge(Z), M!=Z-1.
-%totEdge(T):- #count{X,Y,H:edge(X,Y,H)}=K,T=K+1.
-%:~ totEdge(K). [K@4]
 
 %:~ totEdge(K). [K@1]
 
-%checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1.
-%:~ noedge(X,Y,1), checkUp(X,Y,1). [1@2, X,Y]
+checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1.
+:~ noedge(X,Y,1), checkUp(X,Y,1). [1@2, X,Y]
 
-%checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1.
-%:~ noedge(X,Y,1), checkDown(X,Y,1). [1@2, X,Y]
+checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1.
+:~ noedge(X,Y,1), checkDown(X,Y,1). [1@2, X,Y]
 
-%checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1.
-%:~ noedge(X,Y,0), checkLeft(X,Y,0). [1@2, X,Y]
+checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1.
+:~ noedge(X,Y,0), checkLeft(X,Y,0). [1@2, X,Y]
 
-%checkRight(X,Y,0):-edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1.
-%:~ noedge(X,Y,0), checkRight(X,Y,0). [1@2, X,Y]
+checkRight(X,Y,0):-edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1.
+:~ noedge(X,Y,0), checkRight(X,Y,0). [1@2, X,Y]

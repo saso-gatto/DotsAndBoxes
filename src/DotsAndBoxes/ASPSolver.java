@@ -48,6 +48,7 @@ public class ASPSolver {
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
 			ASPMapper.getInstance().registerClass(Size.class);
+			ASPMapper.getInstance().registerClass(MossaPrec.class);
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
 			e1.printStackTrace();
 		}
@@ -105,6 +106,8 @@ public class ASPSolver {
 		
 		try {
 			facts.addObjectInput(new Size(b.getSize()));
+			//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
+			System.out.println("totalEdge "+b.getTotalEdge());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -112,7 +115,15 @@ public class ASPSolver {
 		Edge ritorna=null;
 	
 		ASPInputProgram var = new ASPInputProgram();
+		
+		try {
+			var.addObjectInput(new MossaPrec(b.getTotalEdge()));
 
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		Output o =  handler.startSync();
 		
 		AnswerSets answersets = (AnswerSets) o;
@@ -121,8 +132,8 @@ public class ASPSolver {
 			System.out.println("No AS");
 		int cont = 0;
 
-		for(AnswerSet a:answersets.getAnswersets()){ 
-		//for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
+		//for(AnswerSet a:answersets.getAnswersets()){ 
+		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				for(Object obj:a.getAtoms()){
 					
