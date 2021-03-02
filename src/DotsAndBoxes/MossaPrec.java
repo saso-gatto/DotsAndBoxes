@@ -12,7 +12,7 @@ public class MossaPrec {
 		return mossaPrec;
 	}
 
-	public void setDim(int mossaPrec) {
+	public void setMossaPrec(int mossaPrec) {
 		this.mossaPrec = mossaPrec;
 	}
 

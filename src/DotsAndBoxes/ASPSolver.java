@@ -26,6 +26,7 @@ public class ASPSolver {
 	
 	private InputProgram facts;
 	
+	private Boolean init=true;
 	
 	public ASPSolver() {
 
@@ -54,7 +55,14 @@ public class ASPSolver {
 		}
 
 		facts= new ASPInputProgram();
-
+		
+		try {
+			facts.addObjectInput(new MossaPrec());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		handler.addProgram(facts);
 
 		InputProgram encoding= new ASPInputProgram();
@@ -65,27 +73,35 @@ public class ASPSolver {
 	}
 	
 //Metodo che possiamo utilizzare per aggiungere eventuali celle delle matrici?
-////	public void trovaFatti(Board b)  {
-//		this.N=b.getN();
-//		int [][]hEdge=b.gethEdge();
-//		int [][]vEdge=b.getvEdge();
-//		for(int i=0; i<(N-1);i++)
-//            for(int j=0; j<N; j++)
-//					try {
-//						facts.addObjectInput(new Edge(i, j, 1));
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//        for(int i=0; i<N; i++)
-//            for(int j=0; j<(N-1); j++)
-//					try {
-//						facts.addObjectInput(new Edge(i, j, 0));
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//	}
+	public void aggiornaFatti(Board b)  {
+		ASPInputProgram var = new ASPInputProgram();
+		
+		int N=b.getN();
+		int [][]hEdge=b.gethEdge();
+		int [][]vEdge=b.getvEdge();
+		for(int i=0; i<(N-1);i++)
+            for(int j=0; j<N; j++)
+				if(hEdge[i][j]==b.BLACK) {	
+	            	try {
+							facts.addObjectInput(new Edge(i, j, 1));
+						} catch (Exception e) {
+							
+							e.printStackTrace();
+						}
+				}
+        for(int i=0; i<N; i++)
+            for(int j=0; j<(N-1); j++)
+            	if(vEdge[i][j]==b.BLACK) {
+					try {
+						facts.addObjectInput(new Edge(i, j, 0));
+					} catch (Exception e) {	e.printStackTrace();}
+            	}
+        
+        try {
+			facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
+			//handler.addProgram(facts);
+		} catch (Exception e) {	e.printStackTrace();	}
+	}
 	
 	public boolean check(Board b,Edge e) {
 		ArrayList <Edge> mosse = b.getAvailableMoves();
@@ -103,22 +119,28 @@ public class ASPSolver {
 	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
+
+		this.aggiornaFatti(b);
 		
-		try {
-			facts.addObjectInput(new Size(b.getSize()));
-			//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
-			System.out.println("totalEdge "+b.getTotalEdge());
-		} catch (Exception e1) {
-			e1.printStackTrace();
+		if(init) {
+			init=false;
+			try {
+				facts.addObjectInput(new Size(b.getSize()-1));
+				//facts.addObjectInput(new MossaPrec(0));
+				//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
+				System.out.println("totalEdge "+b.getTotalEdge());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
-		
 		Edge ritorna=null;
 	
 		ASPInputProgram var = new ASPInputProgram();
 		
 		try {
-			var.addObjectInput(new MossaPrec(b.getTotalEdge()));
-
+		//	var.addObjectInput(new MossaPrec(b.getTotalEdge()));
+		//	handler.addProgram(var);
+		//	var.clearAll();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -135,7 +157,11 @@ public class ASPSolver {
 		//for(AnswerSet a:answersets.getAnswersets()){ 
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
+				System.out.println("Stampa AS");
+				System.out.println(a.toString());
+				
 				for(Object obj:a.getAtoms()){
+					
 					
 					System.out.println("--------- AS -------------");
 					
@@ -143,12 +169,13 @@ public class ASPSolver {
 					if(!(obj instanceof Edge)) continue;
 					
 					Edge edge= (Edge) obj;					
+					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
 					
 					if(!check(b, edge)) continue;
 					cont++;
 					ritorna= edge;
-					System.out.println("--------- edge "+edge);
-					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
+					//System.out.println("--------- edge "+edge);
+					//System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
 					
 					var.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
 					handler.addProgram(var);
