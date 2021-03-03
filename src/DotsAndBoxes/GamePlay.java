@@ -103,11 +103,11 @@ public class GamePlay {
     private void processMove(Edge location) {
     	stampaIsSetVEdge();
         int x=location.getY(), y=location.getX();
-        if (location.getHorizontal()==0) {
-        	location.setHorizontal(1);
-        }
-        else
-        	location.setHorizontal(0);
+//        if (location.getHorizontal()==0) {
+//        	location.setHorizontal(1);
+//        }
+//        else
+//        	location.setHorizontal(0);
         System.out.println("Sono in processMove:x "+x+", y:"+y+" horizontal: "+location.getHorizontal());
 
         ArrayList<Point> ret;
