@@ -28,8 +28,8 @@ public class GamePlay {
     String redName, blueName;
     Main parent;
 
-    private JLabel[][] hEdge, vEdge, box;
-    private boolean[][] isSetHEdge, isSetVEdge;
+    private JLabel[][] vEdge, hEdge, box;
+    private boolean[][] isSetVEdge, isSetHEdge;
 
     private JFrame frame;
     private JLabel redScoreLabel, blueScoreLabel, statusLabel;
@@ -57,45 +57,65 @@ public class GamePlay {
 
         //Tale metodo ci permette di colorare una determinata linea attraverso le coordinate del mouse
         //Viene applicato quando si passa sopra ad una linea per far vedere quale mossa sta facendo il giocatore
-        @Override
+//        @Override
         public void mouseEntered(MouseEvent mouseEvent) {
-            if(!mouseEnabled) return;
-            Edge location = getSource(mouseEvent.getSource());
-            int x=location.getX(), y=location.getY();
-            if(location.getHorizontal()==1) {
-                if(isSetHEdge[x][y]) return; //se in pos x,y HEdge � colorata, non la colorare.
-                hEdge[x][y].setBackground((turn == Board.RED) ? arancione : azzurro);
-            }
-            else {
-                if(isSetVEdge[x][y]) return;
-                vEdge[x][y].setBackground((turn == Board.RED) ? arancione : azzurro);
-            }
+//            if(!mouseEnabled) return;
+//            Edge location = getSource(mouseEvent.getSource());
+//            int x=location.getX(), y=location.getY();
+//            System.out.println("MouseEvent,x: "+x+", y:"+y+" horizontal: "+location.getHorizontal());
+//            if(location.getHorizontal()==1) {
+//                if(isSetHEdge[x][y]) return;
+//                hEdge[x][y].setBackground((turn == Board.RED) ? arancione : azzurro);
+//            }
+//            else {
+//                if(isSetVEdge[x][y]) return; //se in pos x,y HEdge � colorata, non la colorare.
+//                vEdge[x][y].setBackground((turn == Board.RED) ? arancione : azzurro);
+//            }
         }
 
-        //Al rilascio del mouse viene colorata la linea in pos X,Y del mouse.
-        @Override
+//        //Al rilascio del mouse viene colorata la linea in pos X,Y del mouse.
+//        @Override
         public void mouseExited(MouseEvent mouseEvent) {
-            if(!mouseEnabled) return;
-            Edge location = getSource(mouseEvent.getSource());
-            int x=location.getX(), y=location.getY();
-            if(location.getHorizontal()==1) {
-                if(isSetHEdge[x][y]) return;
-                hEdge[x][y].setBackground(Color.WHITE);
-            }
-            else {
-                if(isSetVEdge[x][y]) return;
-                vEdge[x][y].setBackground(Color.WHITE);
-            }
+//            if(!mouseEnabled) return;
+//            Edge location = getSource(mouseEvent.getSource());
+//            int x=location.getX(), y=location.getY();
+//            if(location.getHorizontal()==1) {
+//                if(isSetHEdge[x][y]) return;
+//                hEdge[x][y].setBackground(Color.WHITE);
+//            }
+//            else {
+//                if(isSetVEdge[x][y]) return;
+//                vEdge[x][y].setBackground(Color.WHITE);
+//            }
         }
     };
 
+    public void stampaIsSetVEdge () {
+    	for (int i = 0; i<n-1; i++) {
+    		for (int j=0; j<n; j++) {
+    			System.out.print(isSetVEdge[i][j]);
+    		}
+    		System.out.println("");
+    	}
+    }
+    
+    
     private void processMove(Edge location) {
-        int x=location.getX(), y=location.getY();
+    	stampaIsSetVEdge();
+        int x=location.getY(), y=location.getX();
+        if (location.getHorizontal()==0) {
+        	location.setHorizontal(1);
+        }
+        else
+        	location.setHorizontal(0);
+        System.out.println("Sono in processMove:x "+x+", y:"+y+" horizontal: "+location.getHorizontal());
+
         ArrayList<Point> ret;
+
         if(location.getHorizontal()==1) {
-            if(isSetHEdge[x][y]) return;
+        	if(isSetHEdge[x][y]) return;
             ret = board.setHEdge(x,y,turn);
-            hEdge[x][y].setBackground(Color.BLACK);
+            hEdge[y][x].setBackground(Color.BLACK);
             isSetHEdge[x][y] = true;
         }
         else {
@@ -163,14 +183,18 @@ public class GamePlay {
     }
 
     private Edge getSource(Object object) {
-        for(int i=0; i<(n-1); i++)
-            for(int j=0; j<n; j++)
-                if(hEdge[i][j] == object)
-                    return new Edge(i,j,1);
         for(int i=0; i<n; i++)
-            for(int j=0; j<(n-1); j++)
-                if(vEdge[i][j] == object)
+            for(int j=0; j<n-1; j++)
+                if(hEdge[i][j] == object) {
+                	//System.out.println("Creo l'oggetto in pos: "+i+", "+j+",1");
+                    return new Edge(i,j,1);
+                }
+        for(int i=0; i<n-1; i++)
+            for(int j=0; j<n; j++)
+                if(vEdge[i][j] == object){
+                	//System.out.println("Creo l'oggetto in pos: "+i+", "+j+",0");
                     return new Edge(i,j,0);
+                }
         return new Edge();
     }
 
@@ -277,11 +301,11 @@ public class GamePlay {
         ++constraints.gridy;
         grid.add(getEmptyLabel(new Dimension(2 * boardWidth, 10)), constraints);
 
-        hEdge = new JLabel[n-1][n];
-        isSetHEdge = new boolean[n-1][n];
+        vEdge = new JLabel[n-1][n];
+        isSetVEdge = new boolean[n-1][n];
 
-        vEdge = new JLabel[n][n-1];
-        isSetVEdge = new boolean[n][n-1];
+        hEdge = new JLabel[n][n-1];
+        isSetHEdge = new boolean[n][n-1];
 
         box = new JLabel[n-1][n-1];
 
@@ -290,20 +314,20 @@ public class GamePlay {
             if(i%2==0) {
                 pane.add(getDot());
                 for(int j=0; j<(n-1); j++) {
-                    hEdge[j][i/2] = getHorizontalEdge();
-                    pane.add(hEdge[j][i/2]);
+                    vEdge[j][i/2] = getHorizontalEdge();
+                    pane.add(vEdge[j][i/2]);
                     pane.add(getDot());
                 }
             }
             else {
                 for(int j=0; j<(n-1); j++) {
-                    vEdge[j][i/2] = getVerticalEdge();
-                    pane.add(vEdge[j][i/2]);
+                    hEdge[j][i/2] = getVerticalEdge();
+                    pane.add(hEdge[j][i/2]);
                     box[j][i/2] = getBox();
                     pane.add(box[j][i/2]);
                 }
-                vEdge[n-1][i/2] = getVerticalEdge();
-                pane.add(vEdge[n-1][i/2]);
+                hEdge[n-1][i/2] = getVerticalEdge();
+                pane.add(hEdge[n-1][i/2]);
             }
             ++constraints.gridy;
             grid.add(pane, constraints);

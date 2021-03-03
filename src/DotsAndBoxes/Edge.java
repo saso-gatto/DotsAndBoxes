@@ -13,8 +13,7 @@ public class Edge {
 	private int horizontal; // 0 -> verticale    1 -> orizzontale 
 
     public Edge() {
-        x = y = -1;
-        horizontal = 0;
+
     }
 
     public Edge(int x, int y, int horizontal) {

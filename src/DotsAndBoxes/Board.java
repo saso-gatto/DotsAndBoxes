@@ -9,8 +9,8 @@ public class Board implements Cloneable {
     final static int BLACK = 2;
     final static int BLANK = 3;
 
-    private int[][] hEdge;					//Griglia linee orizzontali
-    private int[][] vEdge;					//Griglia delle linee verticali 
+    private int[][] vEdge;					//Griglia linee orizzontali
+    private int[][] hEdge;					//Griglia delle linee verticali 
     private int[][] box;					//Griglia del gioco		
     
     public int getN() {
@@ -24,30 +24,30 @@ public class Board implements Cloneable {
 	private int n, redScore, blueScore;		//n=numero righe e colonna.
 
     public Board(int n) {
-        hEdge = new int[n-1][n];			
-        vEdge = new int[n][n-1];
+        vEdge = new int[n-1][n];			
+        hEdge = new int[n][n-1];
         box = new int[n-1][n-1];	
-        fill(hEdge,BLANK);					//Indica che tutte le linee orizz. sono vuote
-        fill(vEdge,BLANK);					//Indica che tutte le linee verticali sono vuote
+        fill(vEdge,BLANK);					//Indica che tutte le linee orizz. sono vuote
+        fill(hEdge,BLANK);					//Indica che tutte le linee verticali sono vuote
         fill(box,BLANK);					//griglia vuota
         this.n = n;
         redScore = blueScore = 0;
     }
 
     public int[][] gethEdge() {
-		return hEdge;
-	}
-
-	public void sethEdge(int[][] hEdge) {
-		this.hEdge = hEdge;
-	}
-
-	public int[][] getvEdge() {
 		return vEdge;
 	}
 
+	public void sethEdge(int[][] hEdge) {
+		this.vEdge = hEdge;
+	}
+
+	public int[][] getvEdge() {
+		return hEdge;
+	}
+
 	public void setvEdge(int[][] vEdge) {
-		this.vEdge = vEdge;
+		this.hEdge = vEdge;
 	}
 
 	public int[][] getBox() {
@@ -63,11 +63,11 @@ public class Board implements Cloneable {
 
         for(int i=0; i<(n-1); i++)
             for(int j=0; j<n; j++)
-                cloned.hEdge[i][j] = hEdge[i][j];
+                cloned.vEdge[i][j] = vEdge[i][j];
 
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
-                cloned.vEdge[i][j] = vEdge[i][j];
+                cloned.hEdge[i][j] = hEdge[i][j];
 
         for(int i=0; i<(n-1); i++)
             for(int j=0; j<(n-1); j++)
@@ -111,27 +111,31 @@ public class Board implements Cloneable {
         ArrayList<Edge> ret = new ArrayList<Edge>();
         for(int i=0; i<(n-1);i++)
             for(int j=0; j<n; j++)
-                if(hEdge[i][j] == BLANK)
-                    ret.add(new Edge(i,j,1));
+                if(hEdge[j][i] == BLANK) {
+                	//System.out.println("mossa disponibile: "+i+j+0);
+                    ret.add(new Edge(i,j,0));
+                }
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
-                if(vEdge[i][j] == BLANK)
-                    ret.add(new Edge(i,j,0));
+                if(vEdge[j][i] == BLANK) {
+                	//System.out.println("mossa disponibile: "+i+j+1);
+                    ret.add(new Edge(i,j,1));
+                }
         return ret;
     }
 
     //Il metodo setHEdge serve ad aggiungere una linea e ad assegnare un eventuale punteggio al giocatoer
     //I due if ci permettono di controllare anche i limiti della matrice
-    public ArrayList<Point> setHEdge(int x, int y, int color) { 
-        hEdge[x][y]=BLACK;
+    public ArrayList<Point> setVEdge(int x, int y, int color) { 
+        vEdge[x][y]=BLACK;
         ArrayList<Point> ret = new ArrayList<Point>();
-        if(y<(n-1) && vEdge[x][y]==BLACK && vEdge[x+1][y]==BLACK && hEdge[x][y+1]==BLACK) {
+        if(y<(n-1) && hEdge[x][y]==BLACK && hEdge[x+1][y]==BLACK && vEdge[x][y+1]==BLACK) {
             box[x][y]=color;
             ret.add(new Point(x,y));
             if(color == RED) redScore++;
             else blueScore++;
         }
-        if(y>0 && vEdge[x][y-1]==BLACK && vEdge[x+1][y-1]==BLACK && hEdge[x][y-1]==BLACK) {
+        if(y>0 && hEdge[x][y-1]==BLACK && hEdge[x+1][y-1]==BLACK && vEdge[x][y-1]==BLACK) {
             box[x][y-1]=color;
             ret.add(new Point(x,y-1));
             if(color == RED) redScore++;
@@ -143,16 +147,18 @@ public class Board implements Cloneable {
     //Il metodo setVEdge serve ad aggiungere una linea e ad assegnare un eventuale punteggio al giocatore
     //I due if ci permettono di controllare anche i limiti della matrice
 
-    public ArrayList<Point> setVEdge(int x, int y, int color) {
-        vEdge[x][y]=BLACK;
+    public ArrayList<Point> setHEdge(int x, int y, int color) {
+    	System.out.println("Sono in HEdge: x: "+x+", y:"+y);
+
+        hEdge[x][y]=BLACK;
         ArrayList<Point> ret = new ArrayList<Point>();
-        if(x<(n-1) && hEdge[x][y]==BLACK && hEdge[x][y+1]==BLACK && vEdge[x+1][y]==BLACK) {
+        if(x<(n-1) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
             box[x][y]=color;
             ret.add(new Point(x,y));
             if(color == RED) redScore++;
             else blueScore++;
         }
-        if(x>0 && hEdge[x-1][y]==BLACK && hEdge[x-1][y+1]==BLACK && vEdge[x-1][y]==BLACK) {
+        if(x>0 && vEdge[x-1][y]==BLACK && vEdge[x-1][y+1]==BLACK && hEdge[x-1][y]==BLACK) {
             box[x-1][y]=color;
             ret.add(new Point(x-1,y));
             if(color == RED) redScore++;
@@ -187,10 +193,10 @@ public class Board implements Cloneable {
     //Conta il numero di linee nere presente nella griglia
     private int getEdgeCount(int i, int j) {
         int count = 0;
-        if(hEdge[i][j] == BLACK) count++;
-        if(hEdge[i][j+1] == BLACK) count++;
         if(vEdge[i][j] == BLACK) count++;
-        if(vEdge[i+1][j] == BLACK) count++;
+        if(vEdge[i][j+1] == BLACK) count++;
+        if(hEdge[i][j] == BLACK) count++;
+        if(hEdge[i+1][j] == BLACK) count++;
         return count;
     }
     
@@ -198,11 +204,11 @@ public class Board implements Cloneable {
     	int cont=0;
     	for(int i=0; i<(n-1);i++)
             for(int j=0; j<n; j++)
-                if(hEdge[i][j] == BLACK)
+                if(vEdge[i][j] == BLACK)
                     cont++;
         for(int i=0; i<n; i++)
             for(int j=0; j<(n-1); j++)
-                if(vEdge[i][j] == BLACK)
+                if(hEdge[i][j] == BLACK)
                 	cont++;
         return cont;
     }

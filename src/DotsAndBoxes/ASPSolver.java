@@ -171,15 +171,18 @@ public class ASPSolver {
 					Edge edge= (Edge) obj;					
 					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
 					
-					if(!check(b, edge)) continue;
+					if(!check(b, edge)) {
+						System.out.println("Non aggiungo edge - continue");
+						continue;
+					}
 					cont++;
 					ritorna= edge;
 					//System.out.println("--------- edge "+edge);
 					//System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
 					
-					var.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
-					handler.addProgram(var);
-					var.clearAll();
+					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
+					handler.addProgram(facts);
+					//var.clearAll();
 					return ritorna;
 				}
 			} catch (Exception e) {
