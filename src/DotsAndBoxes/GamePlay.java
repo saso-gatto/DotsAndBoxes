@@ -329,26 +329,83 @@ public class GamePlay {
         
         for (int i = 0; i<5; i++) {
             JPanel pane = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
-            if (i%2==0) {
+            if (i==0) {
                 pane.add(getDot());
-            	for (int j=0; j<dim; j++) {
-	        		System.out.println("i: "+i/2+", j:"+j);
-            		this.vEdge[i/2][j]=getVerticalEdge();
-            		pane.add(vEdge[i/2][j]);
-                    pane.add(getDot());
-            	}
+                
+            	this.hEdge[0][0]=getHorizontalEdge();
+            	pane.add(hEdge[0][0]);
+            	
+            	pane.add(getDot());
+            	
+            	this.hEdge[0][1]=getHorizontalEdge();
+            	pane.add(hEdge[0][1]);
+            	
+            	pane.add(getDot());
+            	
             }
-            else {
-	        	for (int j=0; j<dim-2; j++) {
-	        		this.hEdge[i/2][j]=getHorizontalEdge();
-	        		pane.add(hEdge[i/2][j]);
-	        		box[j][i/2] = getBox();
-                    pane.add(box[j][i/2]);
-	        	}
-	        	//Bisogna aggiungere l'hedge finale qui e non nel for perché nel for aggiungiamo anche il Box
-	        	this.hEdge[i/2][dim-2]=getHorizontalEdge();
-        		pane.add(hEdge[i/2][dim-2]);
+            else if (i==1) {
+	        	this.vEdge[0][0]=getVerticalEdge();
+	        	pane.add(vEdge[0][0]);
+	        	
+	        	box[0][0] = getBox();
+                pane.add(box[0][0]);
+                
+                this.vEdge[0][1]=getVerticalEdge();
+	        	pane.add(vEdge[0][1]);
+	        	
+	        	box[0][1] = getBox();
+                pane.add(box[0][1]);
+                
+                this.vEdge[0][2]=getVerticalEdge();
+	        	pane.add(vEdge[0][2]);
+
+	        }
+            else if (i==2) {
+                pane.add(getDot());
+                
+            	this.hEdge[1][0]=getHorizontalEdge();
+            	pane.add(hEdge[1][0]);
+            	
+            	pane.add(getDot());
+            	
+            	this.hEdge[1][1]=getHorizontalEdge();
+            	pane.add(hEdge[1][1]);
+            	
+            	pane.add(getDot());
+            	
             }
+            else if (i==3) {
+	        	this.vEdge[1][0]=getVerticalEdge();
+	        	pane.add(vEdge[1][0]);
+	        	
+	        	box[1][1] = getBox();
+                pane.add(box[1][1]);
+                
+                this.vEdge[1][1]=getVerticalEdge();
+	        	pane.add(vEdge[1][1]);
+	        	
+	        	box[1][1] = getBox();
+                pane.add(box[1][1]);
+                
+                this.vEdge[1][2]=getVerticalEdge();
+	        	pane.add(vEdge[1][2]);
+
+            }
+            else if (i==4) {
+                pane.add(getDot());
+                
+            	this.hEdge[2][0]=getHorizontalEdge();
+            	pane.add(hEdge[2][0]);
+            	
+            	pane.add(getDot());
+            	
+            	this.hEdge[2][1]=getHorizontalEdge();
+            	pane.add(hEdge[2][1]);
+            	
+            	pane.add(getDot());
+            	          	
+            }
+            
             ++constraints.gridy;
             grid.add(pane, constraints);	
         }
