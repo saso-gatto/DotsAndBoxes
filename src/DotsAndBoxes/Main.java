@@ -165,7 +165,7 @@ public class Main {
             }
         }
         System.out.println("n: "+n);
-        new GamePlay(this, blueSolver,redSolver ,frame, n, redName, blueName);
+        new GamePlay(this, blueSolver,redSolver ,frame, n-1, redName, blueName);
     }
 
     public static void main(String[] args) {

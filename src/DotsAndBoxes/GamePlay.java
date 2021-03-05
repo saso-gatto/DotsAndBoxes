@@ -299,10 +299,10 @@ public class GamePlay {
 
         this.hEdge = new JLabel[dim][dim-1];
       //  isSetHEdge = new boolean[n][n-1];
-
+        System.out.println("Dim: "+dim);
+        
         box = new JLabel[dim-1][dim-1];
-
-        for(int i=0; i<(2*dim-2); i++) {
+     /*   for(int i=0; i<(2*dim-1); i++) {
             JPanel pane = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
             if(i%2==0) {
                 pane.add(getDot());
@@ -314,20 +314,44 @@ public class GamePlay {
                 }
             }
             else {
-                for(int j=0; j<(dim-2); j++) {
+                for(int j=0; j<(dim-1); j++) {
                     vEdge[j][i/2] = getVerticalEdge();
                     pane.add(vEdge[j][i/2]);
                     box[j][i/2] = getBox();
                     pane.add(box[j][i/2]);
                 }
-                int stampa = dim-1;
-                vEdge[dim-2][i/2] = getVerticalEdge();
-                pane.add(vEdge[dim-2][i/2]);
+               // vEdge[dim-1][i/2] = getVerticalEdge();
+               // pane.add(vEdge[dim-1][i/2]);
             }
             ++constraints.gridy;
             grid.add(pane, constraints);
+        }*/
+        
+        for (int i = 0; i<5; i++) {
+            JPanel pane = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
+            if (i%2==0) {
+                pane.add(getDot());
+            	for (int j=0; j<dim; j++) {
+	        		System.out.println("i: "+i/2+", j:"+j);
+            		this.vEdge[i/2][j]=getVerticalEdge();
+            		pane.add(vEdge[i/2][j]);
+                    pane.add(getDot());
+            	}
+            }
+            else {
+	        	for (int j=0; j<dim-2; j++) {
+	        		this.hEdge[i/2][j]=getHorizontalEdge();
+	        		pane.add(hEdge[i/2][j]);
+	        		box[j][i/2] = getBox();
+                    pane.add(box[j][i/2]);
+	        	}
+	        	//Bisogna aggiungere l'hedge finale qui e non nel for perché nel for aggiungiamo anche il Box
+	        	this.hEdge[i/2][dim-2]=getHorizontalEdge();
+        		pane.add(hEdge[i/2][dim-2]);
+            }
+            ++constraints.gridy;
+            grid.add(pane, constraints);	
         }
-
 
         ++constraints.gridy;
         grid.add(getEmptyLabel(new Dimension(2 * boardWidth, 10)), constraints);
