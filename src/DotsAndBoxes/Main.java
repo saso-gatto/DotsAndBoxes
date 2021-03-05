@@ -164,6 +164,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        System.out.println("n: "+n);
         new GamePlay(this, blueSolver,redSolver ,frame, n, redName, blueName);
     }
 

@@ -17,10 +17,6 @@ import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 
 public class ASPSolver {
 
-	private static int[][] hedge;
-	private static int[][] vedge;
-	
-	
 	private static String encodingResource="encodings/DotsAndBoxes";
 	private static Handler handler;
 	
@@ -57,6 +53,7 @@ public class ASPSolver {
 		facts= new ASPInputProgram();
 		
 		try {
+			facts.addObjectInput(new Size(Board.getInstance().getSize()));
 			facts.addObjectInput(new MossaPrec());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -76,7 +73,7 @@ public class ASPSolver {
 	public void aggiornaFatti(Board b)  {
 		ASPInputProgram var = new ASPInputProgram();
 		
-		int N=b.getN();
+		int N=b.getDim();
 		int [][]hEdge=b.gethEdge();
 		int [][]vEdge=b.getvEdge();
 		for(int i=0; i<(N-1);i++)
@@ -104,7 +101,7 @@ public class ASPSolver {
 	}
 	
 	public boolean check(Board b,Edge e) {
-		ArrayList <Edge> mosse = b.getAvailableMoves();
+		ArrayList <Edge> mosse = b.getMosseDisponibili();
 		for (int i = 0; i<mosse.size(); i++) {
 			int x=mosse.get(i).getX();
 			int y=mosse.get(i).getY();
