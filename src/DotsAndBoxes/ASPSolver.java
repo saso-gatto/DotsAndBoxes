@@ -104,24 +104,17 @@ public class ASPSolver {
 	
 	public void aggiungiFatto() {
 		if(Board.getInstance().getUltimaMossa()!= null) {
+			System.out.println("Aggiungo ai fatti l'ultima mossa");
 			try {
 				facts.addObjectInput(Board.getInstance().getUltimaMossa());
 				facts.addObjectInput(new MossaPrec(Board.getInstance().getTotalEdge()));
-				//handler.addProgram(facts);
 			} catch (Exception e) { e.printStackTrace(); }
 		}
 		
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	public boolean check(Board b,Edge e) {
+		public boolean check(Board b,Edge e) {
 		ArrayList <Edge> mosse = b.getMosseDisponibili();
 		for (int i = 0; i<mosse.size(); i++) {
 			int x=mosse.get(i).getX();
@@ -137,35 +130,13 @@ public class ASPSolver {
 	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
-
 		this.aggiungiFatto();
+		this.stampaAS();
 		
-		if(init) {
-			init=false;
-			try {
-				facts.addObjectInput(new Size(b.getSize()-1));
-				//facts.addObjectInput(new MossaPrec(0));
-				//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
-				System.out.println("totalEdge "+b.getTotalEdge());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
 		Edge ritorna=null;
-	
-		ASPInputProgram var = new ASPInputProgram();
-		
-		try {
-			//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
-			//handler.addProgram(var);
-			//var.clearAll();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 		
 		Output o =  handler.startSync();
-		
 		AnswerSets answersets = (AnswerSets) o;
 		
 		if (answersets.getAnswersets().size() <= 0) {
@@ -182,8 +153,6 @@ public class ASPSolver {
 				System.out.println(a.toString());
 				
 				for(Object obj:a.getAtoms()){
-					
-					
 					System.out.println("--------- AS -------------");
 					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
@@ -197,13 +166,11 @@ public class ASPSolver {
 						continue;
 					}
 					cont++;
-					ritorna= edge;
-					//System.out.println("--------- edge "+edge);
-					//System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());				
+					ritorna= edge;			
 					
 					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
 					handler.addProgram(facts);
-					//var.clearAll();
+
 					return ritorna;
 				}
 			} catch (Exception e) {
@@ -214,4 +181,9 @@ public class ASPSolver {
 		return ritorna;
 	}
 	
+	
+	public void stampaAS () {
+		System.out.println("******** STAMPA AS ********");
+		System.out.println(facts.getPrograms());
+	}
 }

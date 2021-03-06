@@ -111,8 +111,10 @@ public class GamePlay {
            // isSetVEdge[x][y] = true;
         }
 
-        for(Point p : quadrati)
+        for(Point p : quadrati) {
+        	System.out.println("Point p:"+p.getX()+","+p.getY());
             box[p.x][p.y].setBackground((turn == Board.RED) ? arancione : azzurro);
+            }
 
         redScoreLabel.setText(String.valueOf(board.getRedScore()));
         blueScoreLabel.setText(String.valueOf(board.getBlueScore()));
@@ -383,8 +385,8 @@ public class GamePlay {
 	        	this.vEdge[1][0]=getVerticalEdge();
 	        	pane.add(vEdge[1][0]);
 	        	
-	        	box[1][1] = getBox();
-                pane.add(box[1][1]);
+	        	box[1][0] = getBox();
+                pane.add(box[1][0]);
                 
                 this.vEdge[1][1]=getVerticalEdge();
 	        	pane.add(vEdge[1][1]);
