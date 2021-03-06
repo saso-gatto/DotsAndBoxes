@@ -168,17 +168,22 @@ public class GamePlay {
         }
     }
 
-    //Object conterrà le coordinate dell'edge da aggiungere
+    //Object conterrï¿½ le coordinate dell'edge da aggiungere
     private Edge getSource(Object object) {
+    	Edge mossa;
         for(int i=0; i<dim; i++)
             for(int j=0; j<dim-1; j++)
                 if(hEdge[i][j] == object) {
-                    return new Edge(i,j,1);
+                	mossa = new Edge(i,j,1);
+                	Board.getInstance().addUltimaMossa(mossa);
+                    return mossa;
                 }
         for(int i=0; i<dim-1; i++)
             for(int j=0; j<dim; j++)
                 if(vEdge[i][j] == object){
-                    return new Edge(i,j,0);
+                	mossa = new Edge(i,j,0);
+                	Board.getInstance().addUltimaMossa(mossa);
+                    return mossa;
                 }
         System.out.println("non ho trovato un oggetto - PROBLEMA");
         return new Edge();

@@ -70,14 +70,14 @@ public class ASPSolver {
 	}
 	
 //Metodo che possiamo utilizzare per aggiungere eventuali celle delle matrici?
-	public void aggiornaFatti(Board b)  {
+/*	public void aggiornaFatti(Board b)  {
 		ASPInputProgram var = new ASPInputProgram();
 		
 		int N=b.getDim();
 		int [][]hEdge=b.gethEdge();
 		int [][]vEdge=b.getvEdge();
-		for(int i=0; i<(N-1);i++)
-            for(int j=0; j<N; j++)
+		for(int i=0; i<N;i++)
+            for(int j=0; j<(N-1); j++)
 				if(hEdge[i][j]==b.BLACK) {	
 	            	try {
 							facts.addObjectInput(new Edge(i, j, 1));
@@ -86,8 +86,8 @@ public class ASPSolver {
 							e.printStackTrace();
 						}
 				}
-        for(int i=0; i<N; i++)
-            for(int j=0; j<(N-1); j++)
+        for(int i=0; i<(N-1); i++)
+            for(int j=0; j<N; j++)
             	if(vEdge[i][j]==b.BLACK) {
 					try {
 						facts.addObjectInput(new Edge(i, j, 0));
@@ -96,9 +96,30 @@ public class ASPSolver {
         
         try {
 			facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
-			//handler.addProgram(facts);
+			handler.addProgram(facts);
 		} catch (Exception e) {	e.printStackTrace();	}
 	}
+	*/
+	
+	
+	public void aggiungiFatto() {
+		if(Board.getInstance().getUltimaMossa()!= null) {
+			try {
+				facts.addObjectInput(Board.getInstance().getUltimaMossa());
+				facts.addObjectInput(new MossaPrec(Board.getInstance().getTotalEdge()));
+				//handler.addProgram(facts);
+			} catch (Exception e) { e.printStackTrace(); }
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean check(Board b,Edge e) {
 		ArrayList <Edge> mosse = b.getMosseDisponibili();
@@ -117,7 +138,7 @@ public class ASPSolver {
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
 
-		this.aggiornaFatti(b);
+		this.aggiungiFatto();
 		
 		if(init) {
 			init=false;
@@ -135,9 +156,9 @@ public class ASPSolver {
 		ASPInputProgram var = new ASPInputProgram();
 		
 		try {
-		//	var.addObjectInput(new MossaPrec(b.getTotalEdge()));
-		//	handler.addProgram(var);
-		//	var.clearAll();
+			//facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
+			//handler.addProgram(var);
+			//var.clearAll();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -147,8 +168,11 @@ public class ASPSolver {
 		
 		AnswerSets answersets = (AnswerSets) o;
 		
-		if (answersets.getAnswersets().size() <= 0)
+		if (answersets.getAnswersets().size() <= 0) {
 			System.out.println("No AS");
+			System.out.println();
+		}
+			
 		int cont = 0;
 
 		//for(AnswerSet a:answersets.getAnswersets()){ 

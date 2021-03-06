@@ -17,17 +17,31 @@ public class Board implements Cloneable {
 	
 	public static Board instance=null;
 	
+	private Edge ultimaMosssa;
+	
     private Board() {
-    	int n = 2;
+    	   	
+    	int n = 3;
         vEdge = new int[n-1][n];			
         hEdge = new int[n][n-1];
         box = new int[n-1][n-1];	
         fill(vEdge,BLANK);					//Indica che tutte le linee orizz. sono vuote
         fill(hEdge,BLANK);					//Indica che tutte le linee verticali sono vuote
         fill(box,BLANK);					//griglia vuota
-        this.dim = n;
+        this.dim = n-1;
         redScore = blueScore = 0;
     }
+    
+    public void addUltimaMossa(Edge e) {
+    	this.ultimaMosssa=e;
+    }
+    
+    public Edge getUltimaMossa() {
+    	return this.ultimaMosssa;
+    }
+    
+    
+
     
     public static Board getInstance() {
     	if (instance==null)
@@ -104,16 +118,16 @@ public class Board implements Cloneable {
 
     public ArrayList<Edge> getMosseDisponibili() {	
         ArrayList<Edge> mosse = new ArrayList<Edge>();
-        for(int i=0; i<dim; i++)
-            for(int j=0; j<dim-1; j++)
+        for(int i=0; i<=dim; i++)
+            for(int j=0; j<dim; j++)
                 if(hEdge[i][j] == BLANK) {
-                	//System.out.println("mossa disponibile: "+i+j+0);
+                	System.out.println("mossa disponibile: "+i+j+1);
                     mosse.add(new Edge(i,j,1));
                 }
-        for(int i=0; i<dim-1; i++)
-            for(int j=0; j<dim; j++)
+        for(int i=0; i<dim; i++)
+            for(int j=0; j<=dim; j++)
                 if(vEdge[i][j] == BLANK) {
-                	//System.out.println("mossa disponibile: "+i+j+1);
+                	System.out.println("mossa disponibile: "+i+j+0);
                     mosse.add(new Edge(i,j,0));
                 }
         return mosse;
@@ -122,7 +136,9 @@ public class Board implements Cloneable {
     //Il metodo setHEdge serve ad aggiungere una linea e ad assegnare un eventuale punteggio al giocatoer
     //I due if ci permettono di controllare anche i limiti della matrice
     public ArrayList<Point> setVEdge(int x, int y, int color) { 
-        vEdge[x][y]=BLACK;
+    	System.out.println("Sono in setVedge, x "+x+" + y "+y);
+    	
+    	vEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
         if(y<(dim-1) && hEdge[x][y]==BLACK && hEdge[x+1][y]==BLACK && vEdge[x][y+1]==BLACK) {
             box[x][y]=color;
@@ -187,13 +203,13 @@ public class Board implements Cloneable {
 
     public int getTotalEdge() {
     	int cont=0;
-    	for(int i=0; i<(dim-1);i++)
-            for(int j=0; j<dim; j++)
-                if(vEdge[i][j] == BLACK)
-                    cont++;
-        for(int i=0; i<dim; i++)
-            for(int j=0; j<(dim-1); j++)
+    	 for(int i=0; i<=dim; i++)
+             for(int j=0; j<dim; j++)
                 if(hEdge[i][j] == BLACK)
+                    cont++;
+    	 for(int i=0; i<dim; i++)
+             for(int j=0; j<=dim; j++)
+                if(vEdge[i][j] == BLACK)
                 	cont++;
         return cont;
     }
