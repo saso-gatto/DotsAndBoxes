@@ -29,7 +29,6 @@ public class GamePlay {
     Main parent;
 
     private JLabel[][] vEdge, hEdge, box;
-    private boolean[][] isSetVEdge, isSetHEdge;
 
     private JFrame frame;
     private JLabel redScoreLabel, blueScoreLabel, statusLabel;
@@ -99,16 +98,16 @@ public class GamePlay {
         ArrayList<Point> quadrati;
 
         if(location.getHorizontal()==1) {
-        	//if(isSetHEdge[x][y]) return;
+        	if (hEdge[x][y].getBackground()==Color.BLACK)
+        		return;
             quadrati = board.setHEdge(x,y,turn); //Otteniamo il quadrato/i che abbiamo aggiungendo l'hedge in X,Y
             this.hEdge[x][y].setBackground(Color.BLACK);
-            //isSetHEdge[x][y] = true;
         }
         else {
-            //if(isSetVEdge[x][y]) return;
+        	if (vEdge[x][y].getBackground()==Color.BLACK)
+        		return;
         	quadrati = board.setVEdge(x,y,turn);
             this.vEdge[x][y].setBackground(Color.BLACK);
-           // isSetVEdge[x][y] = true;
         }
 
         for(Point p : quadrati) {

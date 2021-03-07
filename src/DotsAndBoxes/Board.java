@@ -88,9 +88,6 @@ public class Board implements Cloneable {
                 array[i][j]=val;
     } 
 
-    public int getSize() { 
-    	return dim;
-    }
 
     public int getRedScore() {
         return redScore;
