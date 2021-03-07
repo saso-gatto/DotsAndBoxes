@@ -111,6 +111,8 @@ public class ASPSolver {
 		int cont = 0;
 
 		//for(AnswerSet a:answersets.getAnswersets()){ 
+		System.out.println("STAMP ANSWERSET");
+		System.out.println(answersets.getOutput());
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				System.out.println("Stampa AS");
