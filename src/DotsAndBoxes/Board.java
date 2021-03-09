@@ -163,7 +163,7 @@ public class Board implements Cloneable {
 
         hEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
-        if(x<(dim) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
+        if(x<(dim-1) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
             box[x][y]=color;
             quadrati.add(new Point(x,y));
             if(color == RED) redScore++;

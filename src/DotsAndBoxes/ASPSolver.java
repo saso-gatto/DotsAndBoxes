@@ -112,7 +112,9 @@ public class ASPSolver {
 
 		//for(AnswerSet a:answersets.getAnswersets()){ 
 		System.out.println("STAMP ANSWERSET");
-		System.out.println(answersets.getOutput());
+		//System.out.println(answersets.getOutput());
+		//System.out.println(answersets.getAnswerSetsString());
+		System.out.println(answersets.getOptimalAnswerSets());
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
 				System.out.println("Stampa AS");
@@ -135,7 +137,7 @@ public class ASPSolver {
 					ritorna= edge;			
 					
 					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
-					handler.addProgram(facts);
+					//handler.addProgram(facts);
 
 					return ritorna;
 				}

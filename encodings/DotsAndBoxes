@@ -24,17 +24,14 @@ edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 :- edge(K,_,0),size(K), pos(K).
 :- edge(_,K,1),size(K),pos(K).
 
-%mossaPrec(0).
-%maxPrec(N):- #max{M:mossaPrec(M)}=N.
-%totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
-%:- totEdge(K), maxPrec(N), K<>N+1.
+mossaPrec(0).
+maxPrec(N):- #max{M:mossaPrec(M)}=N.
+totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
+:- totEdge(K), maxPrec(N), K!=N+1. %[1@1]
 
-%:- #count{X,Y,V:edge(X,Y,V)}!=1, pos(X),pos(Y).
 
 %:~ totEdge(K). [K@1]
-
-
-:~ noedge(X,Y,_), #count{X,Y,H:noedge(X,Y,H)}=K. [K@1,X,Y]
+%:~ noedge(X,Y,_), #count{X,Y,H:noedge(X,Y,H)}=K. [K@1,X,Y]
 
 
 checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1.
