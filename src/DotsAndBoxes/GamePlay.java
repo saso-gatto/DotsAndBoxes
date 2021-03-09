@@ -150,6 +150,10 @@ public class GamePlay {
                 statusLabel.setForeground(arancione);
             }
         }
+        else {
+        	Board.getInstance().addUltimaMossa(null);
+        }
+        	
 
     }
 
