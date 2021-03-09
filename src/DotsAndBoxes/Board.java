@@ -17,7 +17,8 @@ public class Board implements Cloneable {
 	
 	public static Board instance=null;
 	
-	private Edge ultimaMosssa;
+	private Edge ultimaMossa;
+	private ArrayList<Edge> mosseFatte = new ArrayList<Edge>();
 	
     private Board() {
     	   	
@@ -33,13 +34,19 @@ public class Board implements Cloneable {
     }
     
     public void addUltimaMossa(Edge e) {
-    	this.ultimaMosssa=e;
+    	this.mosseFatte.add(e);
+    	this.ultimaMossa=e;
     }
     
     public Edge getUltimaMossa() {
-    	return this.ultimaMosssa;
+    	return this.ultimaMossa;
     }
     
+    public Boolean checkMossa(Edge e) {
+    	if(mosseFatte.contains(e)) 
+    		return false;
+    	return true;
+    }
     
 
     
@@ -112,7 +119,6 @@ public class Board implements Cloneable {
     }
     
 
-
     public ArrayList<Edge> getMosseDisponibili() {	
         ArrayList<Edge> mosse = new ArrayList<Edge>();
         for(int i=0; i<=dim; i++)
@@ -134,10 +140,10 @@ public class Board implements Cloneable {
     //I due if ci permettono di controllare anche i limiti della matrice
     public ArrayList<Point> setVEdge(int x, int y, int color) { 
     	//System.out.println("Sono in setVedge, x "+x+" + y "+y);
-    	
+    	System.out.println("Dim VEDGE ----> "+ dim);
     	vEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
-        if(y<(dim-1) && hEdge[x][y]==BLACK && hEdge[x+1][y]==BLACK && vEdge[x][y+1]==BLACK) {
+        if(y<(dim) && hEdge[x][y]==BLACK && hEdge[x+1][y]==BLACK && vEdge[x][y+1]==BLACK) {
             box[x][y]=color;
             quadrati.add(new Point(x,y));
             if(color == RED) 
@@ -158,12 +164,12 @@ public class Board implements Cloneable {
 
     //il metodo torna i quadrati creati con l'aggiunta dell'arco orizzontale in pos X,Y.
     public ArrayList<Point> setHEdge(int x, int y, int color) {
-    	//System.out.println("Sono in hEdge, la dim in board è: "+dim);
+    	//System.out.println("Sono in hEdge, la dim in board ï¿½: "+dim);
     	//System.out.println("Sono in HEdge: x: "+x+", y:"+y);
 
         hEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
-        if(x<(dim-1) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
+        if(x<(dim) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
             box[x][y]=color;
             quadrati.add(new Point(x,y));
             if(color == RED) redScore++;

@@ -92,7 +92,11 @@ public class GamePlay {
 
     private void processMove(Edge location) {
         int x=location.getX(), y=location.getY();
-
+//        if(Board.getInstance().checkMossa(location))
+//        	Board.getInstance().addUltimaMossa(location);
+//        else
+//        	return;
+        
         System.out.println("Sono in processMove:x "+x+", y:"+y+" horizontal: "+location.getHorizontal());
 
         ArrayList<Point> quadrati;

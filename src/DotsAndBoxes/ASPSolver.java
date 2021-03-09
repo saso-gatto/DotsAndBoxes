@@ -129,7 +129,7 @@ public class ASPSolver {
 					Edge edge= (Edge) obj;					
 					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
 					
-					if(!check(b, edge)) {
+					if(!check(Board.getInstance(), edge)) {
 						System.out.println("Non aggiungo edge - continue");
 						continue;
 					}
