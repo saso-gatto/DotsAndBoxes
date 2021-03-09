@@ -70,9 +70,17 @@ public class ASPSolver {
 	public void aggiungiFatto() {
 		if(Board.getInstance().getUltimaMossa()!= null) {
 			System.out.println("Aggiungo ai fatti l'ultima mossa");
+			
+			try {
+				facts.addObjectInput(new MossaPrec(Board.getInstance().getTotalEdge()));
+			} catch (Exception e) { e.printStackTrace(); }
+			
+			if(!check(Board.getInstance(), Board.getInstance().getUltimaMossa())) {
+				System.out.println("Non aggiungo edge - aggiungiFatto");
+				return;
+			}
 			try {
 				facts.addObjectInput(Board.getInstance().getUltimaMossa());
-				facts.addObjectInput(new MossaPrec(Board.getInstance().getTotalEdge()));
 			} catch (Exception e) { e.printStackTrace(); }
 		}
 		

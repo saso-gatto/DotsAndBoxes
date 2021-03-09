@@ -30,6 +30,8 @@ totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
 :- totEdge(K), maxPrec(N), K!=N+1. %[1@1]
 
 
+
+
 %:~ totEdge(K). [K@1]
 %:~ noedge(X,Y,_), #count{X,Y,H:noedge(X,Y,H)}=K. [K@1,X,Y]
 
