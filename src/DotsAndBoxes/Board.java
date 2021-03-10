@@ -20,9 +20,7 @@ public class Board implements Cloneable {
 	private Edge ultimaMossa;
 	private ArrayList<Edge> mosseFatte = new ArrayList<Edge>();
 	
-    private Board() {
-    	   	
-    	int n = 3;
+    public Board(int n) {
         vEdge = new int[n-1][n];			
         hEdge = new int[n][n-1];
         box = new int[n-1][n-1];	
@@ -50,11 +48,11 @@ public class Board implements Cloneable {
     
 
     
-    public static Board getInstance() {
+   /* public static Board getInstance() {
     	if (instance==null)
     		instance= new Board();
     	return instance;
-    }
+    }*/
 
     public int[][] gethEdge() {
 		return vEdge;

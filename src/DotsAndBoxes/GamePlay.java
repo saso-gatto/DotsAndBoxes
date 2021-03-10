@@ -151,7 +151,7 @@ public class GamePlay {
             }
         }
         else {
-        	Board.getInstance().addUltimaMossa(null);
+        	this.board.addUltimaMossa(null);
         }
         	
 
@@ -184,14 +184,14 @@ public class GamePlay {
             for(int j=0; j<dim-1; j++)
                 if(hEdge[i][j] == object) {
                 	mossa = new Edge(i,j,1);
-                	Board.getInstance().addUltimaMossa(mossa);
+                	this.board.addUltimaMossa(mossa);
                     return mossa;
                 }
         for(int i=0; i<dim-1; i++)
             for(int j=0; j<dim; j++)
                 if(vEdge[i][j] == object){
                 	mossa = new Edge(i,j,0);
-                	Board.getInstance().addUltimaMossa(mossa);
+                	this.board.addUltimaMossa(mossa);
                     return mossa;
                 }
         System.out.println("non ho trovato un oggetto - PROBLEMA");
@@ -262,7 +262,7 @@ public class GamePlay {
 
     private void initGame() {
 
-        board = Board.getInstance();
+        board = new Board(this.dim);
         int boardWidth = dim * size + (dim-1) * dist;
         turn = Board.RED;
 
@@ -313,7 +313,7 @@ public class GamePlay {
 
         this.hEdge = new JLabel[dim][dim-1];
       //  isSetHEdge = new boolean[n][n-1];
-System.out.println("Dim gameplay: "+dim);
+        System.out.println("Dim gameplay: "+dim);
         
         box = new JLabel[dim-1][dim-1];
         for(int i=0; i<(2*dim-1); i++) {

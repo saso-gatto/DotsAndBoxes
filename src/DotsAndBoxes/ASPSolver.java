@@ -18,6 +18,7 @@ public class ASPSolver {
 
 	private static String encodingResource="encodings/DotsAndBoxes";
 	private static Handler handler;
+	private boolean start;
 	
 	private InputProgram facts;
 	
@@ -48,16 +49,7 @@ public class ASPSolver {
 		}
 
 		facts= new ASPInputProgram();
-		
-		try {
-			facts.addObjectInput(new Size(Board.getInstance().getDim()));
-			facts.addObjectInput(new MossaPrec());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		handler.addProgram(facts);
-
+		this.start=true;
 		InputProgram encoding= new ASPInputProgram();
 		encoding.addFilesPath(encodingResource);
 
@@ -67,18 +59,17 @@ public class ASPSolver {
 	
 	
 	
-	public void aggiungiFatto() {
+	public void aggiungiFatto(Board b) {
 		try {
-			facts.addObjectInput(new MossaPrec(Board.getInstance().getTotalEdge()));
+			facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
 		} catch (Exception e) { e.printStackTrace(); }
 		
 		
-		
-		if(Board.getInstance().getUltimaMossa()!= null) {
+		if(b.getUltimaMossa()!= null) {
 			System.out.println("Aggiungo ai fatti l'ultima mossa");
 			
 			try {
-				facts.addObjectInput(Board.getInstance().getUltimaMossa());
+				facts.addObjectInput(b.getUltimaMossa());
 			} catch (Exception e) { e.printStackTrace(); }
 		}
 		
@@ -101,7 +92,18 @@ public class ASPSolver {
 	
 	public Edge getNextMove(Board b, int color) {
 		System.out.println("sono in getNextMove");
-		this.aggiungiFatto();
+		if (this.start) {
+			try {
+				facts.addObjectInput(new Size(b.getDim()));
+				facts.addObjectInput(new MossaPrec());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			handler.addProgram(facts);
+			this.start=false;
+		}
+		
+		this.aggiungiFatto(b);
 		this.stampaAS();
 		
 		Edge ritorna=null;
@@ -135,7 +137,7 @@ public class ASPSolver {
 					Edge edge= (Edge) obj;					
 					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
 					
-					if(!check(Board.getInstance(), edge)) {
+					if(!check(b, edge)) {
 						System.out.println("Non aggiungo edge - continue");
 						continue;
 					}
