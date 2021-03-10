@@ -48,3 +48,7 @@ checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1.
 checkRight(X,Y,0):-edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1.
 :~ noedge(X,Y,0), checkRight(X,Y,0). [1@2, X,Y]
 
+totVerticali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=0.
+totOrizzontali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=1.
+:~ totVerticali(V), totOrizzontali(O), D=V-O, V>O. [D@1]
+:~ totVerticali(V), totOrizzontali(O), D=O-V, O>V. [D@1]
