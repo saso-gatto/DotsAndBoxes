@@ -44,6 +44,8 @@ public class ASPSolver {
 			ASPMapper.getInstance().registerClass(Edge.class);
 			ASPMapper.getInstance().registerClass(Size.class);
 			ASPMapper.getInstance().registerClass(MossaPrec.class);
+			ASPMapper.getInstance().registerClass(Assegno.class);
+
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
 			e1.printStackTrace();
 		}
@@ -132,9 +134,9 @@ public class ASPSolver {
 					System.out.println("--------- AS -------------");
 					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
-					if(!(obj instanceof Edge)) continue;
-					
-					Edge edge= (Edge) obj;					
+					if(!(obj instanceof Assegno)) continue;
+					Assegno mossa = (Assegno) obj;
+					Edge edge= new Edge(mossa.getX(), mossa.getY(), mossa.getHorizontal());					
 					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
 					
 					if(!check(b, edge)) {
@@ -144,7 +146,7 @@ public class ASPSolver {
 					cont++;
 					ritorna= edge;			
 					
-					facts.addObjectInput(new Edge(edge.getX(), edge.getY(), edge.getHorizontal()));
+					facts.addObjectInput(edge);
 					//handler.addProgram(facts);
 
 					return ritorna;
