@@ -17,7 +17,6 @@ public class Board implements Cloneable {
 	
 	public static Board instance=null;
 	
-	private Edge ultimaMossa;
 	private ArrayList<Edge> mosseFatte = new ArrayList<Edge>();
 	
     public Board(int n) {
@@ -31,13 +30,17 @@ public class Board implements Cloneable {
         redScore = blueScore = 0;
     }
     
-    public void addUltimaMossa(Edge e) {
-    	this.mosseFatte.add(e);
-    	this.ultimaMossa=e;
+    public void svuotaMosse() {
+    	this.mosseFatte.clear();
     }
     
-    public Edge getUltimaMossa() {
-    	return this.ultimaMossa;
+    public void addUltimaMossa(Edge e) {
+    	this.mosseFatte.add(e);
+    	//this.ultimaMossa=e;
+    }
+    
+    public ArrayList <Edge> getMosseFatte() {
+    	return this.mosseFatte;
     }
     
     public Boolean checkMossa(Edge e) {

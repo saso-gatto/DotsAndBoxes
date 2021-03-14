@@ -98,7 +98,11 @@ public class GamePlay {
 //        	return;
         if(!this.mouseEnabled)
         	System.out.println("Sono in processMove:x "+x+", y:"+y+" horizontal: "+location.getHorizontal());
-
+        if (this.mouseEnabled) {
+        	System.out.println("Mouse enabled: "+location.getX()+","+location.getY()+","+location.getHorizontal());
+        	this.board.addUltimaMossa(location);
+        }
+        	
         ArrayList<Point> quadrati;
 
         if(location.getHorizontal()==1) {
@@ -150,9 +154,7 @@ public class GamePlay {
                 statusLabel.setForeground(arancione);
             }
         }
-        else {
-        	this.board.addUltimaMossa(null);
-        }
+        
         	
 
     }
@@ -184,14 +186,14 @@ public class GamePlay {
             for(int j=0; j<dim-1; j++)
                 if(hEdge[i][j] == object) {
                 	mossa = new Edge(i,j,1);
-                	this.board.addUltimaMossa(mossa);
+                	//this.board.addUltimaMossa(mossa);
                     return mossa;
                 }
         for(int i=0; i<dim-1; i++)
             for(int j=0; j<dim; j++)
                 if(vEdge[i][j] == object){
                 	mossa = new Edge(i,j,0);
-                	this.board.addUltimaMossa(mossa);
+                	//this.board.addUltimaMossa(mossa);
                     return mossa;
                 }
         System.out.println("non ho trovato un oggetto - PROBLEMA");

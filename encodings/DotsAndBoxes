@@ -23,8 +23,6 @@ totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
 :~totEdge(K).  [K@10]
 
 
-%:~totEdge(K). [K@10]
-
 
 %checkVerticaleUp(X,Y,1):- edge(X+1,Y,1),  edge(X,Y,0),edge(X,Y+1,0),edge(X-1,Y+1,0),edge(X-1,Y,0).
 %:~ noedge(X,Y,1),checkVerticaleUp(X,Y,1).[1@3,X,Y]

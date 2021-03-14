@@ -67,12 +67,17 @@ public class ASPSolver {
 		} catch (Exception e) { e.printStackTrace(); }
 		
 		
-		if(b.getUltimaMossa()!= null) {
+		if(b.getMosseFatte().size()!= 0) {
 			System.out.println("Aggiungo ai fatti l'ultima mossa");
 			
 			try {
-				facts.addObjectInput(b.getUltimaMossa());
+				ArrayList<Edge> mosse = b.getMosseFatte();
+				for (Edge e : mosse) {
+					System.out.println("Sono in aggiungi fatto: "+e.getX()+","+e.getY()+","+e.getHorizontal());
+					facts.addObjectInput(e);
+				}
 			} catch (Exception e) { e.printStackTrace(); }
+			b.svuotaMosse();
 		}
 		
 		
@@ -106,7 +111,7 @@ public class ASPSolver {
 		}
 		
 		this.aggiungiFatto(b);
-		this.stampaAS();
+		//this.stampaAS();
 		
 		Edge ritorna=null;
 		
