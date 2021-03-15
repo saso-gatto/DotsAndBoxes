@@ -9,7 +9,8 @@ pos(Z):- &int(0,K;Z), size(K).
 %edge(1,0,1).
 %edge(0,1,0).
 %edge(0,0,1).
-% Guess
+
+%Guess
 edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
 
 %Evitano di uscire dai bordi
@@ -48,18 +49,35 @@ totAssegno(K):-#count{X,Y,H:assegno(X,Y,H)}=K.
 :~not assegno(X,Y,H), checkRight(X,Y,H). [1@6, X,Y,H]
 
 
+:~ assegno(X,Y,1), edge(X+1,Y,1), edge(X,Y,0). [1@2,X,Y,1]
+:~ assegno(X,Y,1), edge(X,Y+1,0), edge(X,Y,0). [1@2,X,Y,1]
+:~ assegno(X,Y,1), edge(X,Y+1,0), edge(X+1,Y,1). [1@2,X,Y,1]
+
+:~ assegno(X,Y,1), edge(X-1,Y,0), edge(X-1,Y+1,0). [1@2,X,Y,1]
+:~ assegno(X,Y,1), edge(X-1,Y,0), edge(X-1,Y,1). [1@2,X,Y,1]
+:~ assegno(X,Y,1), edge(X-1,Y+1,0), edge(X-1,Y,1). [1@2,X,Y,1]
+
+:~ assegno(X,Y,0), edge(X,Y,1), edge(X+1,Y,1). [1@2,X,Y,1]
+:~ assegno(X,Y,0), edge(X,Y,1), edge(X,Y+1,0). [1@2,X,Y,1]
+:~ assegno(X,Y,0), edge(X+1,Y,1), edge(X,Y+1,0). [1@2,X,Y,1]
+
+:~ assegno(X,Y,0), edge(X,Y-1,1), edge(X+1,Y-1,1). [1@2,X,Y,1]
+:~ assegno(X,Y,0), edge(X,Y-1,1), edge(X,Y-1,0). [1@2,X,Y,1]
+:~ assegno(X,Y,0), edge(X+1,Y-1,1), edge(X,Y-1,0). [1@2,X,Y,1]
+
+
 
 checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1, not edge(X,Y,1).
-:~ checkUp(X,Y,1). [1@2, X,Y]
+:~ checkUp(X,Y,1). [1@3, X,Y]
 
 checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1, not edge(X,Y,1).
-:~ checkDown(X,Y,1). [1@2, X,Y]
+:~ checkDown(X,Y,1). [1@3, X,Y]
 
 checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1, not edge(X,Y,0).
-:~ checkLeft(X,Y,0). [1@2, X,Y]
+:~ checkLeft(X,Y,0). [1@3, X,Y]
 
 checkRight(X,Y,0):- edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1, not edge(X,Y,0).
-:~ checkRight(X,Y,0). [1@2, X,Y]
+:~ checkRight(X,Y,0). [1@3, X,Y]
 
 totVerticali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=0.
 totOrizzontali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=1.

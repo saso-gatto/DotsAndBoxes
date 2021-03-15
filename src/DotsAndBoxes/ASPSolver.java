@@ -43,7 +43,6 @@ public class ASPSolver {
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
 			ASPMapper.getInstance().registerClass(Size.class);
-			ASPMapper.getInstance().registerClass(MossaPrec.class);
 			ASPMapper.getInstance().registerClass(Assegno.class);
 
 		} catch (ObjectNotValidException | IllegalAnnotationException e1) {
@@ -62,18 +61,10 @@ public class ASPSolver {
 	
 	
 	public void aggiungiFatto(Board b) {
-		try {
-			facts.addObjectInput(new MossaPrec(b.getTotalEdge()));
-		} catch (Exception e) { e.printStackTrace(); }
-		
-		
 		if(b.getMosseFatte().size()!= 0) {
-			System.out.println("Aggiungo ai fatti l'ultima mossa");
-			
 			try {
 				ArrayList<Edge> mosse = b.getMosseFatte();
 				for (Edge e : mosse) {
-					System.out.println("Sono in aggiungi fatto: "+e.getX()+","+e.getY()+","+e.getHorizontal());
 					facts.addObjectInput(e);
 				}
 			} catch (Exception e) { e.printStackTrace(); }
@@ -98,11 +89,9 @@ public class ASPSolver {
 	
 	
 	public Edge getNextMove(Board b, int color) {
-		System.out.println("sono in getNextMove");
 		if (this.start) {
 			try {
 				facts.addObjectInput(new Size(b.getDim()));
-				facts.addObjectInput(new MossaPrec());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -122,13 +111,8 @@ public class ASPSolver {
 			System.out.println("No AS");
 			System.out.println();
 		}
-			
-		int cont = 0;
 
-		//for(AnswerSet a:answersets.getAnswersets()){ 
-		System.out.println("STAMP ANSWERSET");
-		//System.out.println(answersets.getOutput());
-		//System.out.println(answersets.getAnswerSetsString());
+
 		System.out.println(answersets.getOptimalAnswerSets());
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
@@ -136,31 +120,25 @@ public class ASPSolver {
 				System.out.println(a.toString());
 				
 				for(Object obj:a.getAtoms()){
-					System.out.println("--------- AS -------------");
+
 					
-					//Scartiamo tutto cio' che non e' un oggetto della classe Edge
+					//Scartiamo tutto cio' che non e' un oggetto della classe Assegno
 					if(!(obj instanceof Assegno)) continue;
 					Assegno mossa = (Assegno) obj;
-					Edge edge= new Edge(mossa.getX(), mossa.getY(), mossa.getHorizontal());					
-					System.out.println(edge.getX()+" "+edge.getY()+" "+edge.getHorizontal());	
-					
-					if(!check(b, edge)) {
-						System.out.println("Non aggiungo edge - continue");
+					ritorna= new Edge(mossa.getX(), mossa.getY(), mossa.getHorizontal());					
+				
+					if(!check(b, ritorna)) {
+						//System.out.println("Non aggiungo edge - continue");
 						continue;
-					}
-					cont++;
-					ritorna= edge;			
-					
-					facts.addObjectInput(edge);
-					//handler.addProgram(facts);
+					}		
+					facts.addObjectInput(ritorna);
 
 					return ritorna;
 				}
 			} catch (Exception e) {
-						e.printStackTrace();
-					} 
+				e.printStackTrace();
+			} 
 		}
-		System.out.println("cont "+ cont);
 		return ritorna;
 	}
 	

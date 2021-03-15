@@ -15,8 +15,6 @@ public class Board implements Cloneable {
     
 	private int dim, redScore, blueScore;		//n=numero righe e colonna.
 	
-	public static Board instance=null;
-	
 	private ArrayList<Edge> mosseFatte = new ArrayList<Edge>();
 	
     public Board(int n) {
@@ -36,7 +34,6 @@ public class Board implements Cloneable {
     
     public void addUltimaMossa(Edge e) {
     	this.mosseFatte.add(e);
-    	//this.ultimaMossa=e;
     }
     
     public ArrayList <Edge> getMosseFatte() {
@@ -49,14 +46,6 @@ public class Board implements Cloneable {
     	return true;
     }
     
-
-    
-   /* public static Board getInstance() {
-    	if (instance==null)
-    		instance= new Board();
-    	return instance;
-    }*/
-
     public int[][] gethEdge() {
 		return vEdge;
 	}
@@ -90,7 +79,7 @@ public class Board implements Cloneable {
 	}
 	
 	
-    private void fill(int[][] array, int val) {		//Metodo che ci permette di riempire una griglia
+    private void fill(int[][] array, int val) {		
         for(int i=0; i<array.length; i++)
             for(int j=0; j<array[i].length; j++)
                 array[i][j]=val;
@@ -125,13 +114,11 @@ public class Board implements Cloneable {
         for(int i=0; i<=dim; i++)
             for(int j=0; j<dim; j++)
                 if(hEdge[i][j] == BLANK) {
-                	//System.out.println("mossa disponibile: "+i+j+1);
                     mosse.add(new Edge(i,j,1));
                 }
         for(int i=0; i<dim; i++)
             for(int j=0; j<=dim; j++)
                 if(vEdge[i][j] == BLANK) {
-                	//System.out.println("mossa disponibile: "+i+j+0);
                     mosse.add(new Edge(i,j,0));
                 }
         return mosse;
@@ -140,8 +127,6 @@ public class Board implements Cloneable {
     //Il metodo setHEdge serve ad aggiungere una linea e ad assegnare un eventuale punteggio al giocatoer
     //I due if ci permettono di controllare anche i limiti della matrice
     public ArrayList<Point> setVEdge(int x, int y, int color) { 
-    	//System.out.println("Sono in setVedge, x "+x+" + y "+y);
-    	System.out.println("Dim VEDGE ----> "+ dim);
     	vEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
         if(y<(dim) && hEdge[x][y]==BLACK && hEdge[x+1][y]==BLACK && vEdge[x][y+1]==BLACK) {
@@ -165,9 +150,6 @@ public class Board implements Cloneable {
 
     //il metodo torna i quadrati creati con l'aggiunta dell'arco orizzontale in pos X,Y.
     public ArrayList<Point> setHEdge(int x, int y, int color) {
-    	//System.out.println("Sono in hEdge, la dim in board �: "+dim);
-    	//System.out.println("Sono in HEdge: x: "+x+", y:"+y);
-
         hEdge[x][y]=BLACK;
         ArrayList<Point> quadrati = new ArrayList<Point>();
         if(x<(dim) && vEdge[x][y]==BLACK && vEdge[x][y+1]==BLACK && hEdge[x+1][y]==BLACK) {
@@ -188,7 +170,6 @@ public class Board implements Cloneable {
     //Condizione di stop del gioco
     public boolean isComplete() {
     	if ((redScore + blueScore) == (dim* dim)) {
-    		System.out.println("Condizione di fine gioco verificata");
     		return true;
     	}
         return false;
@@ -223,13 +204,11 @@ public class Board implements Cloneable {
     	 for(int i=0; i<=dim; i++)
              for(int j=0; j<dim; j++)
                 if(hEdge[i][j] == BLACK) {
-                	//System.out.println("Stampo l'arco in pos: "+i+", "+j);
                 	cont++;
                }
     	 for(int i=0; i<dim; i++)
              for(int j=0; j<=dim; j++)
                 if(vEdge[i][j] == BLACK) {
-                	//System.out.println("Stampo l'arco in pos: "+i+", "+j);
                 	cont++;
                 }
         return cont;
