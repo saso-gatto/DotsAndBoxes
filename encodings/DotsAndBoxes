@@ -1,5 +1,4 @@
 val(0..1).
-
 pos(Z):- &int(0,K;Z), size(K).
 
 %. 1-> orizonale       0 -> vericale
@@ -21,12 +20,31 @@ totAssegno(K):-#count{X,Y,H:assegno(X,Y,H)}=K.
 :~totAssegno(K). [K@7]
 :- assegno(K,_,0),size(K), pos(K).
 :- assegno(_,K,1),size(K), pos(K).
+
+
+% Check che verificano la possibilità di mettere il 4 edge per chiudere il quadrato e fare punto
+
+checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1, not edge(X,Y,1).
+:~ checkUp(X,Y,1). [1@3, X,Y]
+
+checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1, not edge(X,Y,1).
+:~ checkDown(X,Y,1). [1@3, X,Y]
+
+checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1, not edge(X,Y,0).
+:~ checkLeft(X,Y,0). [1@3, X,Y]
+
+checkRight(X,Y,0):- edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1, not edge(X,Y,0).
+:~ checkRight(X,Y,0). [1@3, X,Y]
+
+
+% E' preferibile che l'arco che inseriamo corrisponda a quello mancante in uno dei check
 :~not assegno(X,Y,H), checkUp(X,Y,H).   [1@6, X,Y,H]
 :~not assegno(X,Y,H), checkDown(X,Y,H). [1@6, X,Y,H]
 :~not assegno(X,Y,H), checkLeft(X,Y,H). [1@6, X,Y,H]
 :~not assegno(X,Y,H), checkRight(X,Y,H). [1@6, X,Y,H]
 
 
+% E' preferibile non iniserire un arco se con questo l'avversario potrà fare punto
 :~ assegno(X,Y,1), edge(X+1,Y,1), edge(X,Y,0). [1@2,X,Y,1]
 :~ assegno(X,Y,1), edge(X,Y+1,0), edge(X,Y,0). [1@2,X,Y,1]
 :~ assegno(X,Y,1), edge(X,Y+1,0), edge(X+1,Y,1). [1@2,X,Y,1]
@@ -44,19 +62,7 @@ totAssegno(K):-#count{X,Y,H:assegno(X,Y,H)}=K.
 :~ assegno(X,Y,0), edge(X+1,Y-1,1), edge(X,Y-1,0). [1@2,X,Y,1]
 
 
-
-checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1, not edge(X,Y,1).
-:~ checkUp(X,Y,1). [1@3, X,Y]
-
-checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1, not edge(X,Y,1).
-:~ checkDown(X,Y,1). [1@3, X,Y]
-
-checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1, not edge(X,Y,0).
-:~ checkLeft(X,Y,0). [1@3, X,Y]
-
-checkRight(X,Y,0):- edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1, not edge(X,Y,0).
-:~ checkRight(X,Y,0). [1@3, X,Y]
-
+% Garantisce un alternanza fra archi verticali e orizzontali 
 totVerticali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=0.
 totOrizzontali(N):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=1.
 :~ totVerticali(V), totOrizzontali(O), D=V-O, &abs(D;Z). [Z@1]
