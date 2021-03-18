@@ -99,16 +99,6 @@ public class ASPSolver {
 		}
 	}
 	
-/*	public void aggiungiMosseFatte(InputProgram var, Board b) {
-		ArrayList<Edge> mosse = b.getMosseInserite();
-		for (Edge e : mosse) {
-			try {
-				var.addObjectInput(e);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-	} */
 	
 	public Edge getNextMove(Board b, int color) {
 		if (this.start) {
@@ -117,14 +107,15 @@ public class ASPSolver {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			var = new ASPInputProgram();
 			handler.addProgram(facts);
+			handler.addProgram(var);
+
 			this.start=false;
 		}
-		var = new ASPInputProgram();
 		this.aggiungiFatto(b);
 		//this.stampaAS();
 		this.aggiungiMosseDisponibili(var,b);
-		handler.addProgram(var);
 		Edge ritorna=null;
 		
 		Output o =  handler.startSync();
@@ -157,7 +148,6 @@ public class ASPSolver {
 					facts.addObjectInput(ritorna);
 					
 					var.clearAll();
-					handler.removeProgram(var);
 					return ritorna;
 				}
 			} catch (Exception e) {

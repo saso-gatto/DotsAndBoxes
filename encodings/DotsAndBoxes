@@ -3,20 +3,11 @@ pos(Z):- &int(0,K;Z), size(K).
 
 %. 1-> orizonale       0 -> vericale
 
-%Guess
-%edge(X,Y,H)| noedge(X,Y,H):- pos(X), pos(Y), val(H).
-
-%Evitano di uscire dai bordi
-%:- edge(K,_,0),size(K), pos(K).
-%:- edge(_,K,1),size(K), pos(K).
-
 totEdge(K):- #count{X,Y,H:edge(X,Y,H)}=K.
-:~totEdge(K). [K@10]
 
 assegno(X,Y,H)|noassegno(X,Y,H):-noedge(X,Y,H).
 :-#count{X,Y,H:assegno(X,Y,H)}!=1.
-%:-totAssegno(K), K!=1.
-%:~totAssegno(K). [K@7]
+
 :- assegno(K,_,0),size(K), pos(K).
 :- assegno(_,K,1),size(K), pos(K).
 
@@ -24,16 +15,16 @@ assegno(X,Y,H)|noassegno(X,Y,H):-noedge(X,Y,H).
 %Check che verificano la possibilità di mettere il 4 edge per chiudere il quadrato e fare punto
 
 checkUp(X,Y,1):-edge(X,Y,0), edge(X1,Y,1), edge(X,Y1,0), X1=X+1, Y1=Y+1, not edge(X,Y,1).
-:~ checkUp(X,Y,1). [1@3, X,Y]
+%:~ checkUp(X,Y,1). [1@3, X,Y]
 
 checkDown(X,Y,1):-edge(X1,Y,0),edge(X1,Y1,0),edge(X1,Y,1), X1=X-1,Y1=Y+1, not edge(X,Y,1).
-:~ checkDown(X,Y,1). [1@3, X,Y]
+%:~ checkDown(X,Y,1). [1@3, X,Y]
 
 checkLeft(X,Y,0):-edge(X,Y1,0),edge(X,Y,1),edge(X1,Y,1), X1=X+1,Y1=Y+1, not edge(X,Y,0).
-:~ checkLeft(X,Y,0). [1@3, X,Y]
+%:~ checkLeft(X,Y,0). [1@3, X,Y]
 
 checkRight(X,Y,0):- edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1, not edge(X,Y,0).
-:~ checkRight(X,Y,0). [1@3, X,Y]
+%:~ checkRight(X,Y,0). [1@3, X,Y]
 
 
 % E' preferibile che l'arco che inseriamo corrisponda a quello mancante in uno dei check
@@ -60,16 +51,8 @@ checkRight(X,Y,0):- edge(X,Y1,0), edge(X,Y1,1),edge(X1,Y1,1),Y1=Y-1,X1=X+1, not 
 
 
 % Garantisce un alternanza fra archi verticali e orizzontali 
-%totVerticali(K):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=0,K=N+1, assegno(X,Y,0).
-
-
 totVerticali(K):-val(V),#count{X,Y,V:edge(X,Y,V)}=N,V=0, #count{X,Y,V:assegno(X,Y,V)}=M, K=N+M.
 totOrizzontali(K):-val(V),#count{X,Y,V:edge(X,Y,V)}=N,V=1, #count{X,Y,V:assegno(X,Y,V)}=M, K=N+M.
 
-%totOrizzontali(K):-val(V), #count{X,Y,V:edge(X,Y,V)}=N, V=1,K=N+1, assegno(X,Y,1).
-
-
-
-%:~ totVerticali(V), totOrizzontali(O), D=V+1-O, &abs(D;Z), assegno(X,Y,0). [Z@1]
 :~ totVerticali(V), totOrizzontali(O), D=V-O, &abs(D;Z). [Z@1]
 
