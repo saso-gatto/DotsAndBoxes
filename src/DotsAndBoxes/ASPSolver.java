@@ -21,6 +21,8 @@ public class ASPSolver {
 	private boolean start;
 	
 	private InputProgram facts;
+	private InputProgram var;
+
 	
 	public ASPSolver() {
 
@@ -42,6 +44,7 @@ public class ASPSolver {
 		//classe Edge che viene prima registrata all'ASPMapper
 		try {
 			ASPMapper.getInstance().registerClass(Edge.class);
+			ASPMapper.getInstance().registerClass(NoEdge.class);
 			ASPMapper.getInstance().registerClass(Size.class);
 			ASPMapper.getInstance().registerClass(Assegno.class);
 
@@ -69,9 +72,7 @@ public class ASPSolver {
 				}
 			} catch (Exception e) { e.printStackTrace(); }
 			b.svuotaMosse();
-		}
-		
-		
+		}		
 	}
 	
 		public boolean check(Board b,Edge e) {
@@ -87,6 +88,27 @@ public class ASPSolver {
 		return false;
 	}
 	
+	public void aggiungiMosseDisponibili(InputProgram var, Board b) {
+		ArrayList<Edge> mosse = b.getMosseDisponibili();
+		for (Edge e : mosse) {
+			try {
+				var.addObjectInput(new NoEdge(e.getX(),e.getY(),e.getHorizontal()));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+/*	public void aggiungiMosseFatte(InputProgram var, Board b) {
+		ArrayList<Edge> mosse = b.getMosseInserite();
+		for (Edge e : mosse) {
+			try {
+				var.addObjectInput(e);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	} */
 	
 	public Edge getNextMove(Board b, int color) {
 		if (this.start) {
@@ -98,10 +120,11 @@ public class ASPSolver {
 			handler.addProgram(facts);
 			this.start=false;
 		}
-		
+		var = new ASPInputProgram();
 		this.aggiungiFatto(b);
 		//this.stampaAS();
-		
+		this.aggiungiMosseDisponibili(var,b);
+		handler.addProgram(var);
 		Edge ritorna=null;
 		
 		Output o =  handler.startSync();
@@ -111,8 +134,7 @@ public class ASPSolver {
 			System.out.println("No AS");
 			System.out.println();
 		}
-
-
+		
 		System.out.println(answersets.getOptimalAnswerSets());
 		for(AnswerSet a: answersets.getOptimalAnswerSets()) {	
 			try {
@@ -124,6 +146,7 @@ public class ASPSolver {
 					
 					//Scartiamo tutto cio' che non e' un oggetto della classe Assegno
 					if(!(obj instanceof Assegno)) continue;
+					
 					Assegno mossa = (Assegno) obj;
 					ritorna= new Edge(mossa.getX(), mossa.getY(), mossa.getHorizontal());					
 				
@@ -132,7 +155,9 @@ public class ASPSolver {
 						continue;
 					}		
 					facts.addObjectInput(ritorna);
-
+					
+					var.clearAll();
+					handler.removeProgram(var);
 					return ritorna;
 				}
 			} catch (Exception e) {

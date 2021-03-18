@@ -134,7 +134,7 @@ public class Main {
 
         JPanel sizePanel = new JPanel(new GridLayout(4, 2));
         sizePanel.setPreferredSize(new Dimension(400, 100));
-        for(int i=0; i<5; i++)
+        for(int i=0; i<6; i++)
             sizePanel.add(sizeButton[i]);
         sizeGroup.clearSelection();
         ++constraints.gridy;
