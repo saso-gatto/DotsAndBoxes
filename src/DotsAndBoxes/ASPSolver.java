@@ -76,7 +76,7 @@ public class ASPSolver {
 	}
 	
 		public boolean check(Board b,Edge e) {
-		ArrayList <Edge> mosse = b.getMosseDisponibili();
+		ArrayList <NoEdge> mosse = b.getMosseDisponibili();
 		for (int i = 0; i<mosse.size(); i++) {
 			int x=mosse.get(i).getX();
 			int y=mosse.get(i).getY();
@@ -89,8 +89,8 @@ public class ASPSolver {
 	}
 	
 	public void aggiungiMosseDisponibili(InputProgram var, Board b) {
-		ArrayList<Edge> mosse = b.getMosseDisponibili();
-		for (Edge e : mosse) {
+		ArrayList<NoEdge> mosse = b.getMosseDisponibili();
+		for (NoEdge e : mosse) {
 			try {
 				var.addObjectInput(new NoEdge(e.getX(),e.getY(),e.getHorizontal()));
 			} catch (Exception e1) {

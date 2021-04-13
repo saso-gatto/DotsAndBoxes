@@ -110,17 +110,17 @@ public class Board implements Cloneable {
     
     
 
-    public ArrayList<Edge> getMosseDisponibili() {	
-        ArrayList<Edge> mosse = new ArrayList<Edge>();
+    public ArrayList<NoEdge> getMosseDisponibili() {	
+        ArrayList<NoEdge> mosse = new ArrayList<NoEdge>();
         for(int i=0; i<=dim; i++)
             for(int j=0; j<dim; j++)
                 if(hEdge[i][j] == BLANK) {
-                    mosse.add(new Edge(i,j,1));
+                    mosse.add(new NoEdge(i,j,1));
                 }
         for(int i=0; i<dim; i++)
             for(int j=0; j<=dim; j++)
                 if(vEdge[i][j] == BLANK) {
-                    mosse.add(new Edge(i,j,0));
+                    mosse.add(new NoEdge(i,j,0));
                 }
         return mosse;
     }
